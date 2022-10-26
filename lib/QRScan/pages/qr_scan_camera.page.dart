@@ -3,15 +3,17 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-class QrScanPage extends StatefulWidget {
-  const QrScanPage({super.key});
-  static const routeName = '/QrScanPage';
+import '../example.dart';
+
+class QrScanCamera extends StatefulWidget {
+  const QrScanCamera({super.key});
+  static const routeName = '/QrScanCamera';
 
   @override
-  State<QrScanPage> createState() => _QrScanPageState();
+  State<QrScanCamera> createState() => _QrScanCameraState();
 }
 
-class _QrScanPageState extends State<QrScanPage> {
+class _QrScanCameraState extends State<QrScanCamera> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QRScan');
   Barcode? result;
   QRViewController? QRcontroller;
@@ -41,7 +43,6 @@ class _QrScanPageState extends State<QrScanPage> {
               overlay: QrScannerOverlayShape(),
             ),
           ),
-          // Text(result != null ? "Result: ${result!.code}" : 'Scan code')
         ],
       ),
     );
@@ -55,9 +56,11 @@ class _QrScanPageState extends State<QrScanPage> {
         controller.pauseCamera();
         final String qrCode = event.code.toString();
         Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ResultQrPage(resultQr: qrCode)));
+          context,
+          MaterialPageRoute(
+            builder: (context) => ResultQrPage(resultQr: qrCode),
+          ),
+        );
       });
     });
   }
@@ -66,24 +69,5 @@ class _QrScanPageState extends State<QrScanPage> {
   void dispose() {
     super.dispose();
     QRcontroller?.dispose();
-  }
-}
-
-class ResultQrPage extends StatelessWidget {
-  const ResultQrPage({super.key, required this.resultQr});
-  final String resultQr;
-  static const routeName = '/ResultQrPage';
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(resultQr),
-        ],
-      ),
-    );
   }
 }
