@@ -1,16 +1,11 @@
-# qr_scan_app
+QR SCAN APP
+=====================================================================
+DATE 24/10/22
+================================
+THIS APP IS FOR QR SCAN APP 
 
-A new Flutter project.
+For Qr scan we use two package : -
+ 1. qr_code_scanner: ^1.0.1
+ 2. flutter_barcode_scanner: ^2.0.0
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
