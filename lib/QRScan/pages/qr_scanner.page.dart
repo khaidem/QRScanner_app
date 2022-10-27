@@ -1,7 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:qr_scan_app/QRScan/example.dart';
+import 'package:qr_scan_app/router/router.dart';
 
 class QrScannerPage extends StatefulWidget {
   const QrScannerPage({
@@ -27,12 +28,13 @@ class _QrScannerPageState extends State<QrScannerPage> {
 
     setState(() {
       this.scanResult = scanResult;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ResultQrPage(resultQr: scanResult),
-        ),
-      );
+      context.router.replace(ResultQrRoute(resultQr: scanResult));
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => ResultQrPage(resultQr: scanResult),
+      //   ),
+      // );
       print('check Qr $scanResult');
     });
   }
@@ -49,7 +51,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
           children: <Widget>[
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(QrScanCamera.routeName);
+                context.router.push(const QrScanCameraRoute());
               },
               child: const Text('Scan'),
             ),
@@ -57,7 +59,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
               onPressed: ScanBarCode,
               icon: const Icon(Icons.camera_alt_outlined),
               label: const Text('Scan'),
-            )
+            ),
           ],
         ),
       ),

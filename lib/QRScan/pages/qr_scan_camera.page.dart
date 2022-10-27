@@ -5,15 +5,15 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../example.dart';
 
-class QrScanCamera extends StatefulWidget {
-  const QrScanCamera({super.key});
-  static const routeName = '/QrScanCamera';
+class QrScanCameraPage extends StatefulWidget {
+  const QrScanCameraPage({super.key});
+  static const routeName = '/QrScanCameraPage';
 
   @override
-  State<QrScanCamera> createState() => _QrScanCameraState();
+  State<QrScanCameraPage> createState() => _QrScanCameraPageState();
 }
 
-class _QrScanCameraState extends State<QrScanCamera> {
+class _QrScanCameraPageState extends State<QrScanCameraPage> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QRScan');
   Barcode? result;
   QRViewController? QRcontroller;
