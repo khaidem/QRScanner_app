@@ -11,81 +11,104 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i4;
-import 'package:flutter/material.dart' as _i5;
+import 'package:auto_route/auto_route.dart' as _i5;
+import 'package:flutter/material.dart' as _i6;
 
-import '../QRScan/pages/qr_scan_camera.page.dart' as _i3;
-import '../QRScan/pages/qr_scanner.page.dart' as _i1;
-import '../QRScan/pages/result_qr_scan.page.dart' as _i2;
+import '../onbaording/pages/login.page.dart' as _i1;
+import '../QRScan/pages/qr_camera.Page.dart' as _i4;
+import '../QRScan/pages/qr_scanner.page.dart' as _i2;
+import '../QRScan/pages/result_qr_scan.page.dart' as _i3;
 
-class AppRouter extends _i4.RootStackRouter {
-  AppRouter([_i5.GlobalKey<_i5.NavigatorState>? navigatorKey])
+class AppRouter extends _i5.RootStackRouter {
+  AppRouter([_i6.GlobalKey<_i6.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i4.PageFactory> pagesMap = {
-    QrScannerRoute.name: (routeData) {
-      return _i4.MaterialPageX<dynamic>(
+  final Map<String, _i5.PageFactory> pagesMap = {
+    LoginRoute.name: (routeData) {
+      return _i5.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i1.QrScannerPage(),
+        child: const _i1.LoginPage(),
+      );
+    },
+    QrScannerRoute.name: (routeData) {
+      return _i5.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const _i2.QrScannerPage(),
       );
     },
     ResultQrRoute.name: (routeData) {
       final args = routeData.argsAs<ResultQrRouteArgs>();
-      return _i4.MaterialPageX<dynamic>(
+      return _i5.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i2.ResultQrPage(
+        child: _i3.ResultQrPage(
           key: args.key,
           resultQr: args.resultQr,
         ),
       );
     },
-    QrScanCameraRoute.name: (routeData) {
-      return _i4.MaterialPageX<dynamic>(
+    QrCameraRoute.name: (routeData) {
+      return _i5.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i3.QrScanCameraPage(),
+        child: const _i4.QrCameraPage(),
       );
     },
   };
 
   @override
-  List<_i4.RouteConfig> get routes => [
-        _i4.RouteConfig(
-          QrScannerRoute.name,
+  List<_i5.RouteConfig> get routes => [
+        _i5.RouteConfig(
+          LoginRoute.name,
           path: '/',
         ),
-        _i4.RouteConfig(
-          ResultQrRoute.name,
-          path: '',
+        _i5.RouteConfig(
+          QrScannerRoute.name,
+          path: '/qr-scanner-page',
         ),
-        _i4.RouteConfig(
-          QrScanCameraRoute.name,
-          path: '',
+        _i5.RouteConfig(
+          ResultQrRoute.name,
+          path: '/result-qr-page',
+        ),
+        _i5.RouteConfig(
+          QrCameraRoute.name,
+          path: '/qr-camera-page',
         ),
       ];
 }
 
 /// generated route for
-/// [_i1.QrScannerPage]
-class QrScannerRoute extends _i4.PageRouteInfo<void> {
+/// [_i1.LoginPage]
+class LoginRoute extends _i5.PageRouteInfo<void> {
+  const LoginRoute()
+      : super(
+          LoginRoute.name,
+          path: '/',
+        );
+
+  static const String name = 'LoginRoute';
+}
+
+/// generated route for
+/// [_i2.QrScannerPage]
+class QrScannerRoute extends _i5.PageRouteInfo<void> {
   const QrScannerRoute()
       : super(
           QrScannerRoute.name,
-          path: '/',
+          path: '/qr-scanner-page',
         );
 
   static const String name = 'QrScannerRoute';
 }
 
 /// generated route for
-/// [_i2.ResultQrPage]
-class ResultQrRoute extends _i4.PageRouteInfo<ResultQrRouteArgs> {
+/// [_i3.ResultQrPage]
+class ResultQrRoute extends _i5.PageRouteInfo<ResultQrRouteArgs> {
   ResultQrRoute({
-    _i5.Key? key,
+    _i6.Key? key,
     required String resultQr,
   }) : super(
           ResultQrRoute.name,
-          path: '',
+          path: '/result-qr-page',
           args: ResultQrRouteArgs(
             key: key,
             resultQr: resultQr,
@@ -101,7 +124,7 @@ class ResultQrRouteArgs {
     required this.resultQr,
   });
 
-  final _i5.Key? key;
+  final _i6.Key? key;
 
   final String resultQr;
 
@@ -112,13 +135,13 @@ class ResultQrRouteArgs {
 }
 
 /// generated route for
-/// [_i3.QrScanCameraPage]
-class QrScanCameraRoute extends _i4.PageRouteInfo<void> {
-  const QrScanCameraRoute()
+/// [_i4.QrCameraPage]
+class QrCameraRoute extends _i5.PageRouteInfo<void> {
+  const QrCameraRoute()
       : super(
-          QrScanCameraRoute.name,
-          path: '',
+          QrCameraRoute.name,
+          path: '/qr-camera-page',
         );
 
-  static const String name = 'QrScanCameraRoute';
+  static const String name = 'QrCameraRoute';
 }

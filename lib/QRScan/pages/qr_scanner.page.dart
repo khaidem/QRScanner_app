@@ -15,19 +15,21 @@ class QrScannerPage extends StatefulWidget {
 }
 
 class _QrScannerPageState extends State<QrScannerPage> {
-  String? scanResult;
+  String? resultScan;
   Future ScanBarCode() async {
     String scanResult;
     try {
       scanResult = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.QR);
+          '#ff6666', 'cancel', true, ScanMode.DEFAULT);
     } on PlatformException {
       scanResult = 'Failed to get paltform version';
     }
     if (!mounted) return;
+    if (scanResult.isEmpty) return;
 
     setState(() {
-      this.scanResult = scanResult;
+      resultScan = scanResult;
+
       context.router.replace(ResultQrRoute(resultQr: scanResult));
       // Navigator.pushReplacement(
       //   context,
@@ -44,16 +46,18 @@ class _QrScannerPageState extends State<QrScannerPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('QR Scanner'),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ElevatedButton(
+            ElevatedButton.icon(
               onPressed: () {
-                context.router.push(const QrScanCameraRoute());
+                context.router.push(const QrCameraRoute());
               },
-              child: const Text('Scan'),
+              icon: const Icon(Icons.camera_alt_outlined),
+              label: const Text('Scan'),
             ),
             ElevatedButton.icon(
               onPressed: ScanBarCode,

@@ -1,1 +1,1 @@
-export './flutter_barcode_scan.widget.dart';
+export '../pages/qr_camera.Page.dart';
