@@ -1,4 +1,4 @@
-const String appName = 'Qr Scan ';
+const String appName = 'QR Scan ';
 
 class KImage {
   static const String qrScan1 = 'assets/images/qr-img-1.png';

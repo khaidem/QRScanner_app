@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:qr_scan_app/core/helper/logger.dart';
 import 'package:qr_scan_app/router/app_router.gr.dart';
 
 class QrCameraPage extends StatefulWidget {
@@ -75,20 +76,25 @@ class _QrCameraPageState extends State<QrCameraPage> {
 
   void onQRViewCreated(QRViewController controller) {
     QRcontroller = controller;
-    controller.scannedDataStream.listen((event) {
-      setState(() {
-        result = event;
-        controller.pauseCamera();
-        final String qrCode = event.code.toString();
-        context.router.replace(ResultQrRoute(resultQr: qrCode));
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => ResultQrPage(resultQr: qrCode),
-        //   ),
-        // );
-      });
-    });
+    controller.scannedDataStream.listen(
+      (event) {
+        setState(
+          () {
+            result = event;
+            controller.pauseCamera();
+            final String qrCode = event.code.toString();
+            context.router.replace(ResultQrRoute(resultQr: qrCode));
+            logger.i(qrCode);
+            // Navigator.pushReplacement(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => ResultQrPage(resultQr: qrCode),
+            //   ),
+            // );
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -103,7 +109,7 @@ myWidget() => Builder(builder: (BuildContext context) {
         "Scan the customer's QR Code",
         style: Theme.of(context)
             .textTheme
-            .displaySmall
+            .titleSmall
             ?.copyWith(color: Colors.white),
         // style: context.textTheme.titleMedium
         //     ?.copyWith(color: Colors.white),
