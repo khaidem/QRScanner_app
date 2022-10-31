@@ -1,10 +1,10 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_scan_app/QRScan/pages/qr_camera.Page.dart';
 import 'package:qr_scan_app/core/helper/logger.dart';
-import 'package:qr_scan_app/router/router.dart';
+import 'package:qr_scan_app/onbaording/logic/auth_service.dart';
 
 class QrScannerPage extends StatefulWidget {
   const QrScannerPage({
@@ -32,7 +32,6 @@ class _QrScannerPageState extends State<QrScannerPage> {
     setState(() {
       resultScan = scanResult;
 
-      context.router.replace(ResultQrRoute(resultQr: scanResult));
       // Navigator.pushReplacement(
       //   context,
       //   MaterialPageRoute(
@@ -66,7 +65,9 @@ class _QrScannerPageState extends State<QrScannerPage> {
                 ),
               ],
               onChanged: (value) {
-                if (value == 'Add New user') {}
+                if (value == 'Add New user') {
+                  context.read<AuthService>().logOut();
+                }
               },
             ),
           ),

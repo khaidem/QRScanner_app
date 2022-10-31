@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
-import '../../router/app_router.gr.dart';
-
 class ResultQrPage extends StatefulWidget {
   const ResultQrPage({super.key, required this.resultQr});
   final String resultQr;
@@ -28,7 +26,7 @@ class _ResultQrPageState extends State<ResultQrPage> {
 
     setState(() {
       this.scanResult = scanResult;
-      context.router.replace(ResultQrRoute(resultQr: scanResult));
+
       // Navigator.pushReplacement(
       //   context,
       //   MaterialPageRoute(

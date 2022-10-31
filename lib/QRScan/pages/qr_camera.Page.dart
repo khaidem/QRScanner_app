@@ -1,10 +1,8 @@
 import 'dart:io';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_scan_app/core/helper/logger.dart';
-import 'package:qr_scan_app/router/app_router.gr.dart';
 
 class QrCameraPage extends StatefulWidget {
   const QrCameraPage({super.key});
@@ -83,7 +81,7 @@ class _QrCameraPageState extends State<QrCameraPage> {
             result = event;
             controller.pauseCamera();
             final String qrCode = event.code.toString();
-            context.router.replace(ResultQrRoute(resultQr: qrCode));
+
             logger.i(qrCode);
             // Navigator.pushReplacement(
             //   context,

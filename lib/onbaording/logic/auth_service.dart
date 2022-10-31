@@ -65,4 +65,13 @@ class AuthService with ChangeNotifier {
     notifyListeners();
     return true;
   }
+
+  Future<void> logOut() async {
+    _msg = null;
+
+    notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    logger.e(prefs);
+    prefs.clear();
+  }
 }
