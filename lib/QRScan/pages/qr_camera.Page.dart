@@ -20,15 +20,15 @@ class QrCameraPage extends StatefulWidget {
 class _QrCameraPageState extends State<QrCameraPage> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QRScan');
   Barcode? result;
-  QRViewController? QRcontroller;
+  QRViewController? qrController;
   IconData icon = Icons.flash_off;
 
   void resemble() async {
     super.reassemble();
     if (Platform.isAndroid) {
-      QRcontroller!.pauseCamera();
+      qrController!.pauseCamera();
     } else if (Platform.isIOS) {
-      QRcontroller!.resumeCamera();
+      qrController!.resumeCamera();
     }
   }
 
@@ -49,9 +49,9 @@ class _QrCameraPageState extends State<QrCameraPage> {
               backgroundColor: Colors.black.withOpacity(0.7),
               child: IconButton(
                 onPressed: () async {
-                  await QRcontroller?.toggleFlash();
+                  await qrController?.toggleFlash();
                   final isFlashOn =
-                      await QRcontroller?.getFlashStatus() ?? false;
+                      await qrController?.getFlashStatus() ?? false;
                   setState(() {
                     icon = isFlashOn ? Icons.flash_on : Icons.flash_off;
                   });
@@ -78,7 +78,7 @@ class _QrCameraPageState extends State<QrCameraPage> {
   }
 
   void onQRViewCreated(QRViewController controller) {
-    QRcontroller = controller;
+    qrController = controller;
     controller.scannedDataStream.listen(
       (event) {
         setState(
@@ -89,6 +89,7 @@ class _QrCameraPageState extends State<QrCameraPage> {
             final qrCode = event.code.toString();
             logger.i(qrCode);
 
+            ///### Slipt String and use index
             List data = qrCode.split(',');
 
             context.read<QRScanProvider>().getResult(data[0]);
@@ -110,7 +111,7 @@ class _QrCameraPageState extends State<QrCameraPage> {
   @override
   void dispose() {
     super.dispose();
-    QRcontroller?.dispose();
+    qrController?.dispose();
   }
 }
 

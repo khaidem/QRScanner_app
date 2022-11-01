@@ -7,13 +7,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class QRScanProvider with ChangeNotifier {
+  /// ### Qr Scan Result Data
+  ///
   Future<QrScanResult> getResult(String id) async {
     final pref = await SharedPreferences.getInstance();
     final extractedUserData =
         json.decode(pref.getString("msg") as String) as Map<String, dynamic>;
 
     var endpointUrl = 'https://sangaiticket.globizsapp.com/api/ticketviews';
-    var url = "https://sangaiticket.globizsapp.com/api/ticketupdates?id=1";
 
     var requestUrl = '$endpointUrl?id=$id';
     var response = await http.get(
@@ -26,6 +27,8 @@ class QRScanProvider with ChangeNotifier {
     return QrScanResult.fromJson(json.decode(response.body));
   }
 
+  ///### Update Ticket Data
+  ///
   Future getUpdate(String id) async {
     final pref = await SharedPreferences.getInstance();
     final extractedUserData =
