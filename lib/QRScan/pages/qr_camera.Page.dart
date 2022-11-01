@@ -1,8 +1,13 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:qr_scan_app/core/helper/logger.dart';
+import 'package:qr_scan_app/QRScan/pages/result_qr_scan.page.dart';
+
+import '../../core/helper/logger.dart';
+import '../logic/qr_scan.provider.dart';
 
 class QrCameraPage extends StatefulWidget {
   const QrCameraPage({super.key});
@@ -79,16 +84,23 @@ class _QrCameraPageState extends State<QrCameraPage> {
         setState(
           () {
             result = event;
+
             controller.pauseCamera();
-            final String qrCode = event.code.toString();
+            final qrCode = event.code.toString();
+            logger.i(qrCode);
+
+            List data = qrCode.split(',');
+
+            context.read<QRScanProvider>().getResult(data[0]);
 
             logger.i(qrCode);
-            // Navigator.pushReplacement(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => ResultQrPage(resultQr: qrCode),
-            //   ),
-            // );
+            log(qrCode);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ResultQrPage(resultQr: qrCode),
+              ),
+            );
           },
         );
       },

@@ -44,3 +44,8 @@ If invalid: 401
    }
 
 response: 200
+
+/// Qr Scan code
+107, gfccgfcf, Hapta Kangjeibung, 2022-11-21, hbjbjb
+106, hguychc, Hapta Kangjeibung, 2022-11-21, yfyfy
+///

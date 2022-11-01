@@ -1,7 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:provider/provider.dart';
+
+import '../data/model/qr_scan_result.model.dart';
+import '../logic/qr_scan.provider.dart';
 
 class ResultQrPage extends StatefulWidget {
   const ResultQrPage({super.key, required this.resultQr});
@@ -13,61 +14,54 @@ class ResultQrPage extends StatefulWidget {
 }
 
 class _ResultQrPageState extends State<ResultQrPage> {
-  String? scanResult;
-  Future ScanBarCode() async {
-    String scanResult;
-    try {
-      scanResult = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.QR);
-    } on PlatformException {
-      scanResult = 'Failed to get paltform version';
-    }
-    if (!mounted) return;
-
-    setState(() {
-      this.scanResult = scanResult;
-
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => ResultQrPage(resultQr: scanResult),
-      //   ),
-      // );
-      print('check Qr $scanResult');
-    });
-  }
-
+  bool isEnable = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              context.router.pop();
+              Navigator.of(context).pop();
             },
             icon: const Icon(Icons.arrow_back_ios_new_sharp)),
       ),
-      body: Center(
-        child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton.icon(
-              onPressed: () {},
-              icon: const Icon(Icons.camera_alt_outlined),
-              label: const Text('scan'),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(widget.resultQr),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(onPressed: () {}, child: const Text('check'))
-          ],
-        ),
-      ),
+      body: FutureBuilder<QrScanResult>(
+          future: context.read<QRScanProvider>().getResult(widget.resultQr),
+          builder: (context, snapShot) {
+            if (snapShot.hasData) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ListTile(
+                      title: Column(
+                        children: [
+                          Text('Id No : ${snapShot.data!.idNo}'),
+                          Text("Id Type : ${snapShot.data!.idType}"),
+                          Text("Name : ${snapShot.data!.name}"),
+                        ],
+                      ),
+                    ),
+                    Visibility(
+                      visible: snapShot.data!.checked == false,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          context
+                              .read<QRScanProvider>()
+                              .getUpdate(widget.resultQr);
+                        },
+                        child: const Text('Checked'),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          }),
     );
   }
 }

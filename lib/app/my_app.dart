@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_scan_app/QRScan/logic/qr_scan.provider.dart';
 import 'package:qr_scan_app/QRScan/pages/qr_scanner.page.dart';
 import 'package:qr_scan_app/onbaording/logic/auth_service.dart';
 import 'package:qr_scan_app/onbaording/pages/login.page.dart';
@@ -13,7 +14,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => AuthService())],
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => AuthService(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => QRScanProvider(),
+        )
+      ],
       child: Consumer<AuthService>(
         builder: (ctx, auth, _) => MaterialApp(
           title: 'Flutter Demo',

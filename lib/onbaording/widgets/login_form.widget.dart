@@ -135,7 +135,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             child: TextFormField(
               focusNode: textSecondFocusNode,
               controller: password,
-              // obscureText: _isObscure,
+              obscureText: _isObscure,
               decoration: InputDecoration(
                 hintText: 'Password',
                 labelText: 'Password',

@@ -20,6 +20,9 @@ class AuthService with ChangeNotifier {
     return null;
   }
 
+  /// ### This will work For Login
+  ///
+
   Future<void> login(String username, String password) async {
     final url =
         Uri.parse('https://sangaiticket.globizsapp.com/api/sitelogins/login');
@@ -48,6 +51,7 @@ class AuthService with ChangeNotifier {
     }
   }
 
+  /// ### This will work for usr
   Future<bool> tryAutoLogin() async {
     final pref = await SharedPreferences.getInstance();
 
