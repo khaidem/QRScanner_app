@@ -31,7 +31,13 @@ class _ResultQrPageState extends State<ResultQrPage> {
         future: context.read<QRScanProvider>().getResult(widget.resultQr),
         builder: (context, snapShot) {
           if (snapShot.hasError) {
-            return const Text('Something went Wrong');
+            return const Center(
+                child: Text(
+              'Invalid Ticket ',
+              style: TextStyle(
+                  color: Color.fromARGB(255, 224, 66, 119),
+                  fontWeight: FontWeight.bold),
+            ));
           } else if (snapShot.hasData) {
             return Padding(
               padding: const EdgeInsets.all(25),

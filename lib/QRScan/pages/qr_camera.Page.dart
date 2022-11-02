@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_scan_app/QRScan/pages/result_qr_scan.page.dart';
@@ -86,22 +87,29 @@ class _QrCameraPageState extends State<QrCameraPage> {
             result = event;
 
             controller.pauseCamera();
-            final qrCode = event.code.toString();
-            logger.i(qrCode);
+            try {
+              final qrCode = event.code.toString();
+              logger.i(qrCode);
+              EasyLoading.showToast(qrCode);
 
-            ///### Slipt String and use index
-            List data = qrCode.split(',');
+              ///### Slipt String and use index
+              List data = qrCode.split(',');
 
-            context.read<QRScanProvider>().getResult(data[0]);
+              context.read<QRScanProvider>().getResult(data[0]);
 
-            logger.i(qrCode);
-            log(qrCode);
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ResultQrPage(resultQr: qrCode),
-              ),
-            );
+              logger.i(qrCode);
+              log(qrCode);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResultQrPage(resultQr: qrCode),
+                ),
+              );
+            } on HttpException catch (error) {
+              switch (error.message) {
+                default:
+              }
+            }
           },
         );
       },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_scan_app/core/helper/logger.dart';
 import 'package:qr_scan_app/onbaording/logic/auth_service.dart';
@@ -20,6 +21,13 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   bool _isLoading = false;
 
   FocusNode textSecondFocusNode = FocusNode();
+
+  void login(String username, String password) async {
+    try {
+      final url =
+          Uri.parse('https://sangaiticket.globizsapp.com/api/sitelogins/login');
+    } catch (error) {}
+  }
 
   /// ### For Error Dialog Show when Username or Password wrong
   ///
@@ -209,11 +217,10 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                     return;
                   }
                   formKey.currentState!.save();
-                  if (mounted) {
-                    setState(() {
-                      _isLoading = true;
-                    });
-                  }
+                  if (mounted) {}
+                  setState(() {
+                    _isLoading = true;
+                  });
                   try {
                     await context.read<AuthService>().login(
                           userName.text.trim(),
@@ -227,13 +234,15 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                     //     ),
                     //   ),
                     // );
-                    await Future.delayed(
-                      const Duration(seconds: 5),
-                    );
+                    // await Future.delayed(
+                    //   const Duration(seconds: 5),
+                    // );
                   } catch (error) {
                     logger.i(error);
-                    _showDialog(context);
+                    EasyLoading.showToast(error.toString());
+                    // _showDialog(context);
                   }
+
                   if (mounted) {
                     setState(() {
                       _isLoading = false;
