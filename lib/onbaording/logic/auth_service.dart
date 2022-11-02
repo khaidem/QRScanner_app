@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'package:qr_scan_app/core/helper/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'dart:io';
 
 class AuthService with ChangeNotifier {
   String? _msg;
@@ -37,9 +36,7 @@ class AuthService with ChangeNotifier {
         ),
       );
       final responseData = jsonDecode(response.body);
-      if (responseData['type'] == 'fail') {
-        throw const HttpException('msg');
-      }
+
       logger.d(responseData);
       final pref = await SharedPreferences.getInstance();
       _msg = responseData["msg"];

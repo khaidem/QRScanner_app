@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_scan_app/QRScan/logic/qr_scan.provider.dart';
 import 'package:qr_scan_app/QRScan/pages/qr_scanner.page.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
           ),
           debugShowCheckedModeBanner: false,
+          builder: EasyLoading.init(),
 
           home: auth.isAuth
               ? const QrScannerPage()
@@ -37,7 +39,8 @@ class MyApp extends StatelessWidget {
                   builder: (ctx, authResult) =>
                       authResult.connectionState == ConnectionState.waiting
                           ? const SplashScreenPage()
-                          : const LoginPage()),
+                          : const LoginPage(),
+                ),
           // routes: {
           //   QrScanCamera.routeName: (context) => const QrScanCamera(),
           //   FlutterBarcodeScannerWidget.routeName: (context) =>
