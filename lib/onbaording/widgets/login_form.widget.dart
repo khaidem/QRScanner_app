@@ -71,7 +71,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
               height: 50,
             ),
             Image.asset(
-              KImage.sangLogo,
+              KImage.sangaiLogo,
               height: 150,
             ),
             const SizedBox(height: 30),

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_scan_app/QRScan/logic/qr_scan.provider.dart';
-import 'package:qr_scan_app/QRScan/pages/qr_scanner.page.dart';
+import 'package:qr_scan_app/QRScan/pages/ticket_agent_home.page.dart';
+import 'package:qr_scan_app/QRScan/pages/ticket_sold.page.dart';
 import 'package:qr_scan_app/onbaording/logic/auth_service.dart';
-import 'package:qr_scan_app/onbaording/pages/login.page.dart';
-import 'package:qr_scan_app/onbaording/pages/splash_screen.page.dart';
+import 'package:qr_scan_app/onbaording/pages/otp_login.page.dart';
+import 'package:qr_scan_app/onbaording/pages/verification_otp.page.dart';
+import 'package:qr_scan_app/router/bottom_navigation.router.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({
@@ -31,21 +33,16 @@ class MyApp extends StatelessWidget {
           ),
           debugShowCheckedModeBanner: false,
           builder: EasyLoading.init(),
-
-          home: auth.isAuth
-              ? const QrScannerPage()
-              : FutureBuilder(
-                  future: auth.tryAutoLogin(),
-                  builder: (ctx, authResult) =>
-                      authResult.connectionState == ConnectionState.waiting
-                          ? const SplashScreenPage()
-                          : const LoginPage(),
-                ),
-          // routes: {
-          //   QrScanCamera.routeName: (context) => const QrScanCamera(),
-          //   FlutterBarcodeScannerWidget.routeName: (context) =>
-          //       const FlutterBarcodeScannerWidget()
-          // },
+          home: const OtpLoginPage(),
+          routes: {
+            VerificationOtpPage.routeName: (context) =>
+                const VerificationOtpPage(),
+            TicketAgentHomePage.routeName: (context) =>
+                const TicketAgentHomePage(),
+            TicketSoldPage.routeName: (context) => const TicketSoldPage(),
+            BottomNavigationBarRouter.routeName: (context) =>
+                const BottomNavigationBarRouter()
+          },
         ),
       ),
     );
