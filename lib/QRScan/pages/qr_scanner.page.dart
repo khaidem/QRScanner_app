@@ -97,10 +97,10 @@ class _QrScannerPageState extends State<QrScannerPage> {
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      stops: [0.0, 0.0],
+                      // stops: [0.0, 0.0],
                       colors: [
-                        Color(0x00FFBC11),
                         Color(0xfff45b69),
+                        Color(0xffffbc11),
                       ],
                     ),
                     borderRadius: BorderRadius.all(

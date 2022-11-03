@@ -95,6 +95,7 @@ class _ResultQrPageState extends State<ResultQrPage> {
                               snapShot.data!.name,
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
+                              overflow: TextOverflow.fade,
                             )
                           ],
                         ),
@@ -109,6 +110,7 @@ class _ResultQrPageState extends State<ResultQrPage> {
                               snapShot.data!.idNo,
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
+                              overflow: TextOverflow.fade,
                             )
                           ],
                         ),
@@ -123,6 +125,7 @@ class _ResultQrPageState extends State<ResultQrPage> {
                               snapShot.data!.idType,
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
+                              overflow: TextOverflow.fade,
                             )
                           ],
                         ),
@@ -156,37 +159,82 @@ class _ResultQrPageState extends State<ResultQrPage> {
                   ),
                   Visibility(
                     visible: snapShot.data!.checked == false,
-                    child: SizedBox(
-                      width: 500,
-                      height: 55,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xfff45b69),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                              20,
-                            ),
+                    child: InkWell(
+                      onTap: () {
+                        context
+                            .read<QRScanProvider>()
+                            .getUpdate(widget.resultQr)
+                            .then(
+                              (value) => Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => const QrScannerPage(),
+                                ),
+                              ),
+                            );
+
+                        showSuccess(title: 'Success');
+                      },
+                      child: Container(
+                        width: 500,
+                        height: 55,
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            // stops: [0.0, 0.0],
+                            colors: [
+                              Color(0xfff45b69),
+                              Color(0xffffbc11),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20),
                           ),
                         ),
-                        onPressed: () {
-                          context
-                              .read<QRScanProvider>()
-                              .getUpdate(widget.resultQr)
-                              .then(
-                                (value) =>
-                                    Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => const QrScannerPage(),
-                                  ),
-                                ),
-                              );
-
-                          showSuccess(title: 'Success');
-                        },
-                        child: const Text('CHECK'),
+                        child: const Center(
+                          child: Text(
+                            'Check',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ),
                     ),
                   ),
+                  // Visibility(
+                  //   visible: snapShot.data!.checked == false,
+                  //   child: SizedBox(
+                  //     width: 500,
+                  //     height: 55,
+                  //     child: ElevatedButton(
+                  //       style: ElevatedButton.styleFrom(
+                  //         backgroundColor: const Color(0xfff45b69),
+                  //         shape: RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.circular(
+                  //             20,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       onPressed: () {
+                  //         context
+                  //             .read<QRScanProvider>()
+                  //             .getUpdate(widget.resultQr)
+                  //             .then(
+                  //               (value) =>
+                  //                   Navigator.of(context).pushReplacement(
+                  //                 MaterialPageRoute(
+                  //                   builder: (context) => const QrScannerPage(),
+                  //                 ),
+                  //               ),
+                  //             );
+
+                  //         showSuccess(title: 'Success');
+                  //       },
+                  //       child: const Text('CHECK'),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             );
