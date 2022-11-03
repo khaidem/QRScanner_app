@@ -23,6 +23,11 @@ class _QrCameraPageState extends State<QrCameraPage> {
   Barcode? result;
   QRViewController? qrController;
   IconData icon = Icons.flash_off;
+  @override
+  void initState() {
+    super.initState();
+    qrController?.resumeCamera();
+  }
 
   void resemble() async {
     super.reassemble();
@@ -42,6 +47,7 @@ class _QrCameraPageState extends State<QrCameraPage> {
             key: qrKey,
             onQRViewCreated: onQRViewCreated,
             overlay: QrScannerOverlayShape(),
+            onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
           ),
           Positioned(
             top: 30,
@@ -112,8 +118,19 @@ class _QrCameraPageState extends State<QrCameraPage> {
             }
           },
         );
+        controller.pauseCamera();
+        controller.resumeCamera();
       },
     );
+  }
+
+  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
+    log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
+    if (!p) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('no Permission')),
+      );
+    }
   }
 
   @override

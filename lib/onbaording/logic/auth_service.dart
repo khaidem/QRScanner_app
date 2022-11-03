@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:qr_scan_app/core/helper/logger.dart';
 import 'package:qr_scan_app/onbaording/data/model/http_exception.dart';
@@ -25,7 +26,7 @@ class AuthService with ChangeNotifier {
 
   Future<void> login(String username, String password) async {
     final url =
-        Uri.parse('http://sangaiticket.globizsapp.com/api/sitelogins/login');
+        Uri.parse('https://sangaiticket.globizsapp.com/api/sitelogins/login');
     try {
       final response = await http.post(
         url,
@@ -39,6 +40,7 @@ class AuthService with ChangeNotifier {
       final responseData = jsonDecode(response.body);
       _msg = responseData['msg'];
       logger.d(responseData);
+      EasyLoading.showToast(responseData.toString());
 
       if (responseData['msg'] == "Invalid Username or Password") {
         throw HttpException(responseData['msg']);
@@ -50,7 +52,7 @@ class AuthService with ChangeNotifier {
         {'msg': _msg.toString()},
       );
       pref.setString('msg', storeData);
-      // EasyLoading.showToast(responseData.toString());
+
       logger.v('SharePref $storeData');
     } catch (error) {
       // EasyLoading.showToast(error.toString());

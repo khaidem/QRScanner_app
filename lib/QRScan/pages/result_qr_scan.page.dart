@@ -32,12 +32,13 @@ class _ResultQrPageState extends State<ResultQrPage> {
         builder: (context, snapShot) {
           if (snapShot.hasError) {
             return const Center(
-                child: Text(
-              'Invalid Ticket ',
-              style: TextStyle(
-                  color: Color.fromARGB(255, 224, 66, 119),
-                  fontWeight: FontWeight.bold),
-            ));
+              child: Text(
+                'Invalid Ticket ',
+                style: TextStyle(
+                    color: Color.fromARGB(255, 224, 66, 119),
+                    fontWeight: FontWeight.bold),
+              ),
+            );
           } else if (snapShot.hasData) {
             return Padding(
               padding: const EdgeInsets.all(25),
