@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_scan_app/QRScan/pages/qr_scanner.page.dart';
 
+import '../../core/constant/constant.dart';
 import '../../core/widget/eld.dart';
 import '../data/model/qr_scan_result.model.dart';
 import '../logic/qr_scan.provider.dart';
@@ -19,48 +20,43 @@ class _ResultQrPageState extends State<ResultQrPage> {
   bool isEnable = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(
-      //   leading: IconButton(
-      //       onPressed: () {
-      //         Navigator.of(context).pop();
-      //       },
-      //       icon: const Icon(Icons.arrow_back_ios_new_sharp)),
-      // ),
-      body: FutureBuilder<QrScanResult>(
-        future: context.read<QRScanProvider>().getResult(widget.resultQr),
-        builder: (context, snapShot) {
-          if (snapShot.hasError) {
-            return const Center(
-              child: Text(
-                'Invalid Ticket ',
-                style: TextStyle(
-                    color: Color.fromARGB(255, 224, 66, 119),
-                    fontWeight: FontWeight.bold),
-              ),
-            );
-          } else if (snapShot.hasData) {
-            return Padding(
-              padding: const EdgeInsets.all(25),
-              child: Column(
+    return Padding(
+      padding: const EdgeInsets.all(35),
+      child: Scaffold(
+        body: FutureBuilder<QrScanResult>(
+          future: context.read<QRScanProvider>().getResult(widget.resultQr),
+          builder: (context, snapShot) {
+            if (snapShot.hasError) {
+              return const Center(
+                child: Text(
+                  'Invalid Ticket ',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 224, 66, 119),
+                      fontWeight: FontWeight.bold),
+                ),
+              );
+            } else if (snapShot.hasData) {
+              return Column(
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       IconButton(
                         onPressed: () {
-                          Navigator.of(context).pop();
+                          Navigator.of(context).pushReplacementNamed('/');
                         },
                         icon: const Icon(
                           Icons.arrow_back_ios,
-                          size: 40,
+                          size: 30,
                         ),
                       ),
                       Container(
                         alignment: Alignment.bottomLeft,
                         height: 70,
                         child: Image.asset(
-                            'assets/images/IMG-20221102-WA0002.jpg'),
+                          KImage.sangLogo,
+                          height: 100,
+                        ),
                       ),
                     ],
                   ),
@@ -236,14 +232,14 @@ class _ResultQrPageState extends State<ResultQrPage> {
                   //   ),
                   // ),
                 ],
-              ),
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ),
       ),
     );
   }

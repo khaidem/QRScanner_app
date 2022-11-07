@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:qr_scan_app/QRScan/pages/qr_camera.Page.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import 'package:provider/provider.dart';
+import 'package:qr_scan_app/core/helper/logger.dart';
+
+import '../../core/constant/constant.dart';
 import '../../onbaording/logic/auth_service.dart';
 
 class QrScannerPage extends StatefulWidget {
@@ -15,14 +20,84 @@ class QrScannerPage extends StatefulWidget {
 }
 
 class _QrScannerPageState extends State<QrScannerPage> {
-  final bool _isAcceptTermsAndConditions = true;
   var isDisable = true;
+  final String _scanBarcode = 'Unknown';
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  final Shader linearGradient = const LinearGradient(
+    colors: [
+      Color(0xfff45b69),
+      Color(0xffffbc11),
+    ],
+  ).createShader(const Rect.fromLTWH(0.0, 0.0, 0.0, 00.0));
+
+  Future<void> scanQR() async {
+    String barcodeScanRes;
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.QR);
+      logger.d(barcodeScanRes);
+      if (barcodeScanRes.isEmpty) {
+        return;
+      }
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
+    } catch (error) {
+      EasyLoading.showToast(error.toString());
+    }
+//barcode scanner flutter ant
+
+    // setState(() {
+    //   _scanBarcode = barcodeScanRes;
+    // });
+  }
+
+  // Future<void> scanQR() async {
+  //   String barcodeScanRes;
+  //   // Platform messages may fail, so we use a try/catch PlatformException.
+  //   try {
+  //     barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+  //         '#ff6666', 'Cancel', true, ScanMode.QR);
+  //     print(barcodeScanRes);
+  //   } on PlatformException {
+  //     barcodeScanRes = 'Failed to get platform version.';
+  //   }
+
+  //   // If the widget was removed from the tree while the asynchronous platform
+  //   // message was in flight, we want to discard the reply rather than calling
+  //   // setState to update our non-existent appearance.
+  //   if (!mounted) return;
+  //   if (barcodeScanRes) {
+  //     return;
+  //   } else {
+  //     setState(() {
+  //       _scanBarcode = barcodeScanRes;
+  //       final result = barcodeScanRes;
+  //       logger.d(result);
+
+  //       List data = _scanBarcode.split(',');
+  //       context.read<QRScanProvider>().getResult(data[0]);
+
+  //       Navigator.pushReplacement(
+  //         context,
+  //         MaterialPageRoute(
+  //           builder: (context) => ResultQrPage(resultQr: result),
+  //         ),
+  //       );
+  //     });
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.all(25),
-      child: Stack(
+    return Padding(
+      padding: const EdgeInsets.all(35),
+      child: Scaffold(
+          body: Stack(
         children: [
           Positioned(
             top: 30,
@@ -39,56 +114,60 @@ class _QrScannerPageState extends State<QrScannerPage> {
               ),
             ),
           ),
+          Positioned(
+            right: 150,
+            top: 20,
+            child: Container(
+              alignment: Alignment.center,
+              height: 70,
+              child: Row(
+                children: [
+                  Image.asset(
+                    KImage.sangLogo,
+                    height: 100,
+                  ),
+                ],
+              ),
+            ),
+          ),
           Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                alignment: Alignment.center,
-                height: 150,
-                child: Row(
-                  children: [
-                    Image.asset('assets/images/IMG-20221102-WA0002.jpg'),
-                  ],
-                ),
-              ),
               const SizedBox(
-                height: 30,
-              ),
-              SizedBox(
-                height: 200,
-                child: Image.asset('assets/images/Scan.png'),
+                height: 50,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     'Scan',
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Text(
                     'Ticket',
                     style: TextStyle(
                         fontSize: 25,
-                        color: Color.fromARGB(255, 224, 66, 119),
-                        fontWeight: FontWeight.bold),
-                  )
+                        fontWeight: FontWeight.bold,
+                        foreground: Paint()..shader = linearGradient),
+                  ),
                 ],
               ),
               const SizedBox(
-                height: 70,
-                width: 30,
+                height: 50,
+              ),
+              SizedBox(
+                height: 200,
+                child: Image.asset('assets/images/Scan.png'),
+              ),
+              const SizedBox(
+                height: 50,
               ),
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const QrCameraPage(),
-                    ),
-                  );
+                  scanQR();
                 },
                 child: Container(
                   width: 500,
@@ -119,7 +198,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
             ],
           ),
         ],
-      ),
-    ));
+      )),
+    );
   }
 }

@@ -71,13 +71,14 @@ class _QrCameraPageState extends State<QrCameraPage> {
             top: 30,
             right: 80,
             child: Container(
-                margin: const EdgeInsets.all(8),
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  color: Colors.black.withOpacity(0.5),
-                ),
-                child: myWidget()),
+              margin: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: Colors.black.withOpacity(0.5),
+              ),
+              child: myWidget(),
+            ),
           )
         ],
       ),

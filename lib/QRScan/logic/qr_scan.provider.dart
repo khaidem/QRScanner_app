@@ -32,9 +32,7 @@ class QRScanProvider with ChangeNotifier {
       }
       return QrScanResult.fromJson(json.decode(response.body));
     } catch (error) {
-      logger.i(error);
-      EasyLoading.showToast(error.toString());
-      rethrow;
+      throw EasyLoading.showToast("Invalid Ticket");
     }
   }
 

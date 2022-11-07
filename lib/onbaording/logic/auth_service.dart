@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:qr_scan_app/core/helper/logger.dart';
+import 'package:qr_scan_app/core/widget/eld.dart';
 import 'package:qr_scan_app/onbaording/data/model/http_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -40,7 +41,7 @@ class AuthService with ChangeNotifier {
       final responseData = jsonDecode(response.body);
       _msg = responseData['msg'];
       logger.d(responseData);
-      EasyLoading.showToast(responseData.toString());
+      showSuccess(title: "Success");
 
       if (responseData['msg'] == "Invalid Username or Password") {
         throw HttpException(responseData['msg']);
@@ -55,9 +56,8 @@ class AuthService with ChangeNotifier {
 
       logger.v('SharePref $storeData');
     } catch (error) {
-      // EasyLoading.showToast(error.toString());
-      // throw (error.toString());
-      rethrow;
+      EasyLoading.showToast(error.toString());
+      logger.e(error.toString());
     }
   }
 
