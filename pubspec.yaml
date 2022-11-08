@@ -68,11 +68,11 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/images/QrLogo-removebg-preview.png"
+  image_path: "assets/images/applogo.png"
 
 flutter_native_splash:
   color: "#FFFFFF"
-  image: assets/images/QrLogo-removebg-preview.png
+  image: assets/images/sangailogo.png
   branding_mode: bottom
   android: true
   ios: true

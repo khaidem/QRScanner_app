@@ -4,6 +4,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:provider/provider.dart';
+import 'package:qr_scan_app/QRScan/pages/mobile_scanner.page.dart';
 import 'package:qr_scan_app/core/helper/logger.dart';
 
 import '../../core/constant/constant.dart';
@@ -167,7 +168,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
               ),
               InkWell(
                 onTap: () {
-                  scanQR();
+                  Navigator.of(context).pushNamed(MobileScannerPage.routeName);
                 },
                 child: Container(
                   width: 500,

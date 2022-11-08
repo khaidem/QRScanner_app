@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_scan_app/QRScan/logic/qr_scan.provider.dart';
+import 'package:qr_scan_app/QRScan/pages/mobile_scanner.page.dart';
 import 'package:qr_scan_app/QRScan/pages/qr_scanner.page.dart';
+import 'package:qr_scan_app/QRScan/widgets/widgets.dart';
 import 'package:qr_scan_app/onbaording/logic/auth_service.dart';
 import 'package:qr_scan_app/onbaording/pages/login.page.dart';
 import 'package:qr_scan_app/onbaording/pages/splash_screen.page.dart';
@@ -31,7 +33,6 @@ class MyApp extends StatelessWidget {
           ),
           debugShowCheckedModeBanner: false,
           builder: EasyLoading.init(),
-
           home: auth.isAuth
               ? const QrScannerPage()
               : FutureBuilder(
@@ -41,11 +42,10 @@ class MyApp extends StatelessWidget {
                           ? const SplashScreenPage()
                           : const LoginPage(),
                 ),
-          // routes: {
-          //   QrScanCamera.routeName: (context) => const QrScanCamera(),
-          //   FlutterBarcodeScannerWidget.routeName: (context) =>
-          //       const FlutterBarcodeScannerWidget()
-          // },
+          routes: {
+            QrCameraPage.routeName: (context) => const QrCameraPage(),
+            MobileScannerPage.routeName: (context) => const MobileScannerPage()
+          },
         ),
       ),
     );

@@ -8,8 +8,10 @@ import '../data/model/qr_scan_result.model.dart';
 import '../logic/qr_scan.provider.dart';
 
 class ResultQrPage extends StatefulWidget {
-  const ResultQrPage({super.key, required this.resultQr});
+  const ResultQrPage(
+      {super.key, required this.resultQr, required this.screenClosed});
   final String resultQr;
+  final Function() screenClosed;
   static const routeName = '/ResultQrPage';
 
   @override
@@ -77,60 +79,143 @@ class _ResultQrPageState extends State<ResultQrPage> {
                   const SizedBox(
                     height: 30,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 80),
-                    child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text('Name :'),
-                            Text(
-                              snapShot.data!.name,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                              overflow: TextOverflow.fade,
-                            )
-                          ],
+                  Table(
+                    defaultColumnWidth: const FixedColumnWidth(120),
+                    children: [
+                      TableRow(children: [
+                        Column(children: const [
+                          Text('Name :', style: TextStyle(fontSize: 15.0))
+                        ]),
+                        Column(children: [
+                          Text(
+                            snapShot.data!.name,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15.0),
+                          )
+                        ]),
+                      ]),
+                      const TableRow(children: [
+                        SizedBox(
+                          height: 5,
+                          child: Divider(
+                            thickness: 1,
+                          ),
                         ),
-                        const Divider(
-                          thickness: 1,
+                        SizedBox(
+                          height: 5,
+                          child: Divider(
+                            thickness: 1,
+                          ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text('Id Number :'),
-                            Text(
-                              snapShot.data!.idNo,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                              overflow: TextOverflow.fade,
-                            )
-                          ],
+                      ]),
+                      TableRow(children: [
+                        Column(children: const [
+                          Text('Id Number :', style: TextStyle(fontSize: 15.0))
+                        ]),
+                        Column(children: [
+                          Text(
+                            snapShot.data!.idNo,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15.0),
+                          )
+                        ]),
+                      ]),
+                      const TableRow(children: [
+                        SizedBox(
+                          height: 5,
+                          child: Divider(
+                            thickness: 1,
+                          ),
                         ),
-                        const Divider(
-                          thickness: 1,
+                        SizedBox(
+                          height: 5,
+                          child: Divider(
+                            thickness: 1,
+                          ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text('Id Type: '),
-                            Text(
-                              snapShot.data!.idType,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                              overflow: TextOverflow.fade,
-                            )
-                          ],
+                      ]),
+                      TableRow(children: [
+                        Column(children: const [
+                          Text('Id Type: ', style: TextStyle(fontSize: 15.0))
+                        ]),
+                        Column(children: [
+                          Text(
+                            snapShot.data!.idType,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15.0),
+                          )
+                        ]),
+                      ]),
+                      const TableRow(children: [
+                        SizedBox(
+                          height: 5,
+                          child: Divider(
+                            thickness: 1,
+                          ),
                         ),
-                        const Divider(
-                          thickness: 1,
+                        SizedBox(
+                          height: 5,
+                          child: Divider(
+                            thickness: 1,
+                          ),
                         ),
-                      ],
-                    ),
+                      ]),
+                    ],
                   ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 80),
+                  //   child: Column(
+                  //     // mainAxisAlignment: MainAxisAlignment.start,
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       Row(
+                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //         children: [
+                  //           const Text('Name :'),
+                  //           Text(
+                  //             snapShot.data!.name,
+                  //             style:
+                  //                 const TextStyle(fontWeight: FontWeight.bold),
+                  //             overflow: TextOverflow.fade,
+                  //           )
+                  //         ],
+                  //       ),
+                  //       const Divider(
+                  //         thickness: 1,
+                  //       ),
+                  //       Row(
+                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //         children: [
+                  //           const Text('Id Number :'),
+                  //           Text(
+                  //             snapShot.data!.idNo,
+                  //             style:
+                  //                 const TextStyle(fontWeight: FontWeight.bold),
+                  //             overflow: TextOverflow.fade,
+                  //           )
+                  //         ],
+                  //       ),
+                  //       const Divider(
+                  //         thickness: 1,
+                  //       ),
+                  //       Row(
+                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //         children: [
+                  //           const Text('Id Type: '),
+                  //           Text(
+                  //             snapShot.data!.idType,
+                  //             style:
+                  //                 const TextStyle(fontWeight: FontWeight.bold),
+                  //             overflow: TextOverflow.fade,
+                  //           )
+                  //         ],
+                  //       ),
+                  //       const Divider(
+                  //         thickness: 1,
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   const SizedBox(
                     height: 15,
                   ),
