@@ -2,7 +2,7 @@
     package="com.example.qr_scan_app">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="qr Sangai"
+        android:label="Qr Scan"
         android:usesCleartextTraffic="true"
        
         android:icon="@mipmap/ic_launcher">
