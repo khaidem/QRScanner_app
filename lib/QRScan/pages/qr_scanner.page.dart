@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:provider/provider.dart';
 import 'package:qr_scan_app/QRScan/pages/mobile_scanner.page.dart';
-import 'package:qr_scan_app/core/helper/logger.dart';
 
 import '../../core/constant/constant.dart';
 import '../../onbaording/logic/auth_service.dart';
@@ -22,76 +19,21 @@ class QrScannerPage extends StatefulWidget {
 
 class _QrScannerPageState extends State<QrScannerPage> {
   var isDisable = true;
-  final String _scanBarcode = 'Unknown';
 
   @override
   void initState() {
     super.initState();
+    _updateAppbar();
   }
 
-  final Shader linearGradient = const LinearGradient(
-    colors: [
-      Color(0xfff45b69),
-      Color(0xffffbc11),
-    ],
-  ).createShader(const Rect.fromLTWH(0.0, 0.0, 0.0, 00.0));
+  void _updateAppbar() {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+      statusBarIconBrightness: Brightness.dark,
 
-  Future<void> scanQR() async {
-    String barcodeScanRes;
-    try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.QR);
-      logger.d(barcodeScanRes);
-      if (barcodeScanRes.isEmpty) {
-        return;
-      }
-    } on PlatformException {
-      barcodeScanRes = 'Failed to get platform version.';
-    } catch (error) {
-      EasyLoading.showToast(error.toString());
-    }
-//barcode scanner flutter ant
-
-    // setState(() {
-    //   _scanBarcode = barcodeScanRes;
-    // });
+      //or set color with: Color(0xFF0000FF)
+    ));
   }
-
-  // Future<void> scanQR() async {
-  //   String barcodeScanRes;
-  //   // Platform messages may fail, so we use a try/catch PlatformException.
-  //   try {
-  //     barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-  //         '#ff6666', 'Cancel', true, ScanMode.QR);
-  //     print(barcodeScanRes);
-  //   } on PlatformException {
-  //     barcodeScanRes = 'Failed to get platform version.';
-  //   }
-
-  //   // If the widget was removed from the tree while the asynchronous platform
-  //   // message was in flight, we want to discard the reply rather than calling
-  //   // setState to update our non-existent appearance.
-  //   if (!mounted) return;
-  //   if (barcodeScanRes) {
-  //     return;
-  //   } else {
-  //     setState(() {
-  //       _scanBarcode = barcodeScanRes;
-  //       final result = barcodeScanRes;
-  //       logger.d(result);
-
-  //       List data = _scanBarcode.split(',');
-  //       context.read<QRScanProvider>().getResult(data[0]);
-
-  //       Navigator.pushReplacement(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => ResultQrPage(resultQr: result),
-  //         ),
-  //       );
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -130,29 +72,22 @@ class _QrScannerPageState extends State<QrScannerPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(
-                height: 50,
+                height: 20,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Scan',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    'Ticket',
-                    style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        foreground: Paint()..shader = linearGradient),
+                children: const [
+                  GradientText(
+                    'Scan Ticket',
+                    gradient: LinearGradient(colors: [
+                      Color(0xfff45b69),
+                      Color(0xffffbc11),
+                    ]),
                   ),
                 ],
               ),
               const SizedBox(
-                height: 50,
+                height: 10,
               ),
               SizedBox(
                 height: 200,
@@ -195,6 +130,31 @@ class _QrScannerPageState extends State<QrScannerPage> {
           ),
         ],
       )),
+    );
+  }
+}
+
+class GradientText extends StatelessWidget {
+  const GradientText(
+    this.text, {
+    super.key,
+    required this.gradient,
+    this.style,
+  });
+
+  final String text;
+  final TextStyle? style;
+  final Gradient gradient;
+
+  @override
+  Widget build(BuildContext context) {
+    return ShaderMask(
+      blendMode: BlendMode.srcIn,
+      shaderCallback: (bounds) => gradient.createShader(
+        Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+      ),
+      child: Text(text,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
     );
   }
 }

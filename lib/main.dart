@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'app/my_app.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -14,10 +13,6 @@ class MyHttpOverrides extends HttpOverrides {
 }
 
 void main() async {
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.black, //or set color with: Color(0xFF0000FF)
-  ));
-
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
 

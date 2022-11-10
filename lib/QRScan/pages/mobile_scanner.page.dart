@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_scan_app/QRScan/pages/pages.dart';
@@ -18,6 +19,21 @@ class MobileScannerPage extends StatefulWidget {
 class _MobileScannerPageState extends State<MobileScannerPage> {
   MobileScannerController cameraController = MobileScannerController();
   bool screenOpen = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _updateAppbar();
+  }
+
+  void _updateAppbar() {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.black,
+
+      //or set color with: Color(0xFF0000FF)
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

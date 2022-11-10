@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_scan_app/onbaording/logic/auth_service.dart';
 
@@ -19,6 +20,19 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   bool _isLoading = false;
 
   FocusNode textSecondFocusNode = FocusNode();
+  @override
+  void initState() {
+    _updateAppbar();
+    super.initState();
+  }
+
+  void _updateAppbar() {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+      statusBarIconBrightness: Brightness.dark,
+      //or set color with: Color(0xFF0000FF)
+    ));
+  }
 
   @override
   void dispose() {
@@ -40,17 +54,15 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
           ),
           Image.asset(
             KImage.sangLogo,
-            height: 130,
+            height: 150,
           ),
-          const SizedBox(height: 50),
-          const Text(
-            appName,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.w800,
-              color: Color(0xfff45b69),
-            ),
+          const GradientText(
+            'Qr Scan',
+            style: TextStyle(fontSize: 40),
+            gradient: LinearGradient(colors: [
+              Color(0xfff45b69),
+              Color(0xffffbc11),
+            ]),
           ),
           const SizedBox(height: 40),
           TextFormField(
@@ -233,73 +245,33 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                     ),
             ),
           ),
-          // SizedBox(
-          //   width: 300,
-          //   height: 55,
-          //   child: ElevatedButton(
-          //     style: ElevatedButton.styleFrom(
-          //       backgroundColor: const Color(0xfff45b69),
-          //       shape: RoundedRectangleBorder(
-          //         borderRadius: BorderRadius.circular(
-          //           20,
-          //         ),
-          //       ),
-          //     ),
-          //     onPressed: () async {
-          //       if (!formKey.currentState!.validate()) {
-          //         return;
-          //       }
-          //       formKey.currentState!.save();
-          //       if (mounted) {}
-          //       setState(() {
-          //         _isLoading = true;
-          //       });
-          //       try {
-          //         await context.read<AuthService>().login(
-          //               userName.text.trim(),
-          //               password.text.trim(),
-          //             );
-          //         // .then(
-          //         //   (value) => Navigator.pushReplacement(
-          //         //     context,
-          //         //     MaterialPageRoute(
-          //         //       builder: (context) => const QrScannerPage(),
-          //         //     ),
-          //         //   ),
-          //         // );
-          //         // await Future.delayed(
-          //         //   const Duration(seconds: 5),
-          //         // );
-          //       } catch (error) {
-          //         logger.i(error);
-          //         EasyLoading.showToast(error.toString());
-          //         // _showDialog(context);
-          //       }
-
-          //       if (mounted) {
-          //         setState(() {
-          //           _isLoading = false;
-          //         });
-          //       }
-          //     },
-          //     child: (_isLoading)
-          //         ? const SizedBox(
-          //             width: 16,
-          //             height: 16,
-          //             child: CircularProgressIndicator(
-          //               color: Colors.white,
-          //               strokeWidth: 1.5,
-          //             ),
-          //           )
-          //         : const Text(
-          //             'Login',
-          //             style: TextStyle(
-          //                 fontWeight: FontWeight.bold, fontSize: 20),
-          //           ),
-          //   ),
-          // )
         ],
       ),
+    );
+  }
+}
+
+class GradientText extends StatelessWidget {
+  const GradientText(
+    this.text, {
+    super.key,
+    required this.gradient,
+    this.style,
+  });
+
+  final String text;
+  final TextStyle? style;
+  final Gradient gradient;
+
+  @override
+  Widget build(BuildContext context) {
+    return ShaderMask(
+      blendMode: BlendMode.srcIn,
+      shaderCallback: (bounds) => gradient.createShader(
+        Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+      ),
+      child: Text(text,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
     );
   }
 }

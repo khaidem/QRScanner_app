@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_scan_app/QRScan/logic/qr_scan.provider.dart';
 import 'package:qr_scan_app/QRScan/pages/mobile_scanner.page.dart';
@@ -27,10 +28,8 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<AuthService>(
         builder: (ctx, auth, _) => MaterialApp(
-          title: 'sangai Qrscan',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
+          title: 'Qr Scan',
+          theme: ThemeData(fontFamily: GoogleFonts.raleway().fontFamily),
           debugShowCheckedModeBanner: false,
           builder: EasyLoading.init(),
           home: auth.isAuth
