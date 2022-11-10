@@ -38,284 +38,300 @@ class _ResultQrPageState extends State<ResultQrPage> {
                 ),
               );
             } else if (snapShot.hasData) {
-              return Column(
+              return Stack(
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.of(context).pushReplacementNamed('/');
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back_ios,
-                          size: 30,
-                        ),
+                  Positioned(
+                    left: 0,
+                    top: 20,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacementNamed('/');
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        size: 30,
                       ),
-                      Container(
-                        alignment: Alignment.bottomLeft,
-                        height: 70,
-                        child: Image.asset(
-                          KImage.sangLogo,
-                          height: 100,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  SizedBox(
-                    height: 200,
-                    child: Image.asset('assets/images/ticketss.png'),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Text(
-                    'Ticket Details',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Table(
-                    defaultColumnWidth: const FixedColumnWidth(120),
-                    children: [
-                      TableRow(children: [
-                        Column(children: const [
-                          Text('Name :', style: TextStyle(fontSize: 15.0))
-                        ]),
-                        Column(children: [
-                          Text(
-                            snapShot.data!.name,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15.0),
-                          )
-                        ]),
-                      ]),
-                      const TableRow(children: [
-                        SizedBox(
-                          height: 5,
-                          child: Divider(
-                            thickness: 1,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                          child: Divider(
-                            thickness: 1,
-                          ),
-                        ),
-                      ]),
-                      TableRow(children: [
-                        Column(children: const [
-                          Text('Id Number :', style: TextStyle(fontSize: 15.0))
-                        ]),
-                        Column(children: [
-                          Text(
-                            snapShot.data!.idNo,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15.0),
-                          )
-                        ]),
-                      ]),
-                      const TableRow(children: [
-                        SizedBox(
-                          height: 5,
-                          child: Divider(
-                            thickness: 1,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                          child: Divider(
-                            thickness: 1,
-                          ),
-                        ),
-                      ]),
-                      TableRow(children: [
-                        Column(children: const [
-                          Text('Id Type: ', style: TextStyle(fontSize: 15.0))
-                        ]),
-                        Column(children: [
-                          Text(
-                            snapShot.data!.idType,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15.0),
-                          )
-                        ]),
-                      ]),
-                      const TableRow(children: [
-                        SizedBox(
-                          height: 5,
-                          child: Divider(
-                            thickness: 1,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                          child: Divider(
-                            thickness: 1,
-                          ),
-                        ),
-                      ]),
-                    ],
-                  ),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 80),
-                  //   child: Column(
-                  //     // mainAxisAlignment: MainAxisAlignment.start,
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: [
-                  //       Row(
-                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //         children: [
-                  //           const Text('Name :'),
-                  //           Text(
-                  //             snapShot.data!.name,
-                  //             style:
-                  //                 const TextStyle(fontWeight: FontWeight.bold),
-                  //             overflow: TextOverflow.fade,
-                  //           )
-                  //         ],
-                  //       ),
-                  //       const Divider(
-                  //         thickness: 1,
-                  //       ),
-                  //       Row(
-                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //         children: [
-                  //           const Text('Id Number :'),
-                  //           Text(
-                  //             snapShot.data!.idNo,
-                  //             style:
-                  //                 const TextStyle(fontWeight: FontWeight.bold),
-                  //             overflow: TextOverflow.fade,
-                  //           )
-                  //         ],
-                  //       ),
-                  //       const Divider(
-                  //         thickness: 1,
-                  //       ),
-                  //       Row(
-                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //         children: [
-                  //           const Text('Id Type: '),
-                  //           Text(
-                  //             snapShot.data!.idType,
-                  //             style:
-                  //                 const TextStyle(fontWeight: FontWeight.bold),
-                  //             overflow: TextOverflow.fade,
-                  //           )
-                  //         ],
-                  //       ),
-                  //       const Divider(
-                  //         thickness: 1,
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Visibility(
-                    visible: snapShot.data!.checked,
+                  Positioned(
+                    right: 0,
+                    top: 0,
                     child: SizedBox(
-                      width: 500,
-                      height: 55,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xfff45b69),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                              20,
+                      // alignment: Alignment.center,
+                      height: 100,
+                      child: Image.asset(
+                        KImage.sangLogo,
+                      ),
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      const SizedBox(
+                        height: 100,
+                      ),
+                      SizedBox(
+                        height: 200,
+                        child: Image.asset('assets/images/ticketss.png'),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      const Text(
+                        'Ticket Details',
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Table(
+                        defaultColumnWidth: const FixedColumnWidth(120),
+                        children: [
+                          TableRow(children: [
+                            Column(children: const [
+                              Text('Name :', style: TextStyle(fontSize: 15.0))
+                            ]),
+                            Column(children: [
+                              Text(
+                                snapShot.data!.name,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.0),
+                              )
+                            ]),
+                          ]),
+                          const TableRow(children: [
+                            SizedBox(
+                              height: 5,
+                              child: Divider(
+                                thickness: 1,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                              child: Divider(
+                                thickness: 1,
+                              ),
+                            ),
+                          ]),
+                          TableRow(children: [
+                            Column(children: const [
+                              Text('Id Number :',
+                                  style: TextStyle(fontSize: 15.0))
+                            ]),
+                            Column(children: [
+                              Text(
+                                snapShot.data!.idNo,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.0),
+                              )
+                            ]),
+                          ]),
+                          const TableRow(children: [
+                            SizedBox(
+                              height: 5,
+                              child: Divider(
+                                thickness: 1,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                              child: Divider(
+                                thickness: 1,
+                              ),
+                            ),
+                          ]),
+                          TableRow(children: [
+                            Column(children: const [
+                              Text('Id Type: ',
+                                  style: TextStyle(fontSize: 15.0))
+                            ]),
+                            Column(children: [
+                              Text(
+                                snapShot.data!.idType,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.0),
+                              )
+                            ]),
+                          ]),
+                          const TableRow(
+                            children: [
+                              SizedBox(
+                                height: 5,
+                                child: Divider(
+                                  thickness: 1,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                                child: Divider(
+                                  thickness: 1,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 80),
+                      //   child: Column(
+                      //     // mainAxisAlignment: MainAxisAlignment.start,
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       Row(
+                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //         children: [
+                      //           const Text('Name :'),
+                      //           Text(
+                      //             snapShot.data!.name,
+                      //             style:
+                      //                 const TextStyle(fontWeight: FontWeight.bold),
+                      //             overflow: TextOverflow.fade,
+                      //           )
+                      //         ],
+                      //       ),
+                      //       const Divider(
+                      //         thickness: 1,
+                      //       ),
+                      //       Row(
+                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //         children: [
+                      //           const Text('Id Number :'),
+                      //           Text(
+                      //             snapShot.data!.idNo,
+                      //             style:
+                      //                 const TextStyle(fontWeight: FontWeight.bold),
+                      //             overflow: TextOverflow.fade,
+                      //           )
+                      //         ],
+                      //       ),
+                      //       const Divider(
+                      //         thickness: 1,
+                      //       ),
+                      //       Row(
+                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //         children: [
+                      //           const Text('Id Type: '),
+                      //           Text(
+                      //             snapShot.data!.idType,
+                      //             style:
+                      //                 const TextStyle(fontWeight: FontWeight.bold),
+                      //             overflow: TextOverflow.fade,
+                      //           )
+                      //         ],
+                      //       ),
+                      //       const Divider(
+                      //         thickness: 1,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Visibility(
+                        visible: snapShot.data!.checked,
+                        child: SizedBox(
+                          width: 500,
+                          height: 55,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xfff45b69),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                  20,
+                                ),
+                              ),
+                            ),
+                            onPressed: null,
+                            child: const Text('Already Check'),
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: snapShot.data!.checked == false,
+                        child: InkWell(
+                          onTap: () {
+                            context
+                                .read<QRScanProvider>()
+                                .getUpdate(widget.resultQr)
+                                .then(
+                                  (value) =>
+                                      Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const QrScannerPage(),
+                                    ),
+                                  ),
+                                );
+
+                            showSuccess(title: 'Success');
+                          },
+                          child: Container(
+                            width: 500,
+                            height: 55,
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                // stops: [0.0, 0.0],
+                                colors: [
+                                  Color(0xfff45b69),
+                                  Color(0xffffbc11),
+                                ],
+                              ),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20),
+                              ),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Check',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
                         ),
-                        onPressed: null,
-                        child: const Text('Already Check'),
                       ),
-                    ),
-                  ),
-                  Visibility(
-                    visible: snapShot.data!.checked == false,
-                    child: InkWell(
-                      onTap: () {
-                        context
-                            .read<QRScanProvider>()
-                            .getUpdate(widget.resultQr)
-                            .then(
-                              (value) => Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                  builder: (context) => const QrScannerPage(),
-                                ),
-                              ),
-                            );
+                      // Visibility(
+                      //   visible: snapShot.data!.checked == false,
+                      //   child: SizedBox(
+                      //     width: 500,
+                      //     height: 55,
+                      //     child: ElevatedButton(
+                      //       style: ElevatedButton.styleFrom(
+                      //         backgroundColor: const Color(0xfff45b69),
+                      //         shape: RoundedRectangleBorder(
+                      //           borderRadius: BorderRadius.circular(
+                      //             20,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       onPressed: () {
+                      //         context
+                      //             .read<QRScanProvider>()
+                      //             .getUpdate(widget.resultQr)
+                      //             .then(
+                      //               (value) =>
+                      //                   Navigator.of(context).pushReplacement(
+                      //                 MaterialPageRoute(
+                      //                   builder: (context) => const QrScannerPage(),
+                      //                 ),
+                      //               ),
+                      //             );
 
-                        showSuccess(title: 'Success');
-                      },
-                      child: Container(
-                        width: 500,
-                        height: 55,
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            // stops: [0.0, 0.0],
-                            colors: [
-                              Color(0xfff45b69),
-                              Color(0xffffbc11),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'Check',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ),
+                      //         showSuccess(title: 'Success');
+                      //       },
+                      //       child: const Text('CHECK'),
+                      //     ),
+                      //   ),
+                      // ),
+                    ],
                   ),
-                  // Visibility(
-                  //   visible: snapShot.data!.checked == false,
-                  //   child: SizedBox(
-                  //     width: 500,
-                  //     height: 55,
-                  //     child: ElevatedButton(
-                  //       style: ElevatedButton.styleFrom(
-                  //         backgroundColor: const Color(0xfff45b69),
-                  //         shape: RoundedRectangleBorder(
-                  //           borderRadius: BorderRadius.circular(
-                  //             20,
-                  //           ),
-                  //         ),
-                  //       ),
-                  //       onPressed: () {
-                  //         context
-                  //             .read<QRScanProvider>()
-                  //             .getUpdate(widget.resultQr)
-                  //             .then(
-                  //               (value) =>
-                  //                   Navigator.of(context).pushReplacement(
-                  //                 MaterialPageRoute(
-                  //                   builder: (context) => const QrScannerPage(),
-                  //                 ),
-                  //               ),
-                  //             );
-
-                  //         showSuccess(title: 'Success');
-                  //       },
-                  //       child: const Text('CHECK'),
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               );
             } else {

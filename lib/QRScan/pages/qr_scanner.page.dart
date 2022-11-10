@@ -101,7 +101,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
           body: Stack(
         children: [
           Positioned(
-            top: 30,
+            top: 10,
             right: 0,
             child: IconButton(
               onPressed: () {
@@ -116,18 +116,13 @@ class _QrScannerPageState extends State<QrScannerPage> {
             ),
           ),
           Positioned(
-            right: 150,
-            top: 20,
-            child: Container(
-              alignment: Alignment.center,
-              height: 70,
-              child: Row(
-                children: [
-                  Image.asset(
-                    KImage.sangLogo,
-                    height: 100,
-                  ),
-                ],
+            left: 0,
+            top: 0,
+            child: SizedBox(
+              // alignment: Alignment.center,
+              height: 100,
+              child: Image.asset(
+                KImage.sangLogo,
               ),
             ),
           ),

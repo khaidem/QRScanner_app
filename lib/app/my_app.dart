@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<AuthService>(
         builder: (ctx, auth, _) => MaterialApp(
-          title: 'Flutter Demo',
+          title: 'sangai Qrscan',
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
