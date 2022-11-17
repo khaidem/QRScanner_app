@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:provider/provider.dart';
+
 import 'package:qr_scan_app/QRScan/pages/mobile_scanner.page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -52,153 +52,174 @@ class _QrScannerPageState extends State<QrScannerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(35),
-      child: Scaffold(
-          body: Stack(
-        children: [
-          Positioned(
-            top: 10,
-            right: 0,
-            child: IconButton(
-              onPressed: () {
-                showDialog<void>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Do You want to logout?'),
-                      // content: const Text('Do You want to logOut?'),
-                      actions: <Widget>[
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            textStyle: Theme.of(context).textTheme.labelLarge,
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Positioned(
+              top: 50,
+              right: 20,
+              child: IconButton(
+                onPressed: () {
+                  showDialog<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Do You want to logout?'),
+                        // content: const Text('Do You want to logOut?'),
+                        actions: <Widget>[
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              textStyle: Theme.of(context).textTheme.labelLarge,
+                            ),
+                            child: const Text(
+                              'Yes',
+                              style: TextStyle(
+                                  color: Color(0xfff45b69),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () {
+                              context.read<AuthService>().logOut();
+                              Navigator.of(context).pushReplacementNamed('/');
+                            },
                           ),
-                          child: const Text(
-                            'Yes',
-                            style: TextStyle(
-                                color: Color(0xfff45b69),
-                                fontWeight: FontWeight.bold),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              textStyle: Theme.of(context).textTheme.labelLarge,
+                            ),
+                            child: const Text(
+                              'No',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
                           ),
-                          onPressed: () {
-                            context.read<AuthService>().logOut();
-                            Navigator.of(context).pushReplacementNamed('/');
-                          },
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            textStyle: Theme.of(context).textTheme.labelLarge,
-                          ),
-                          child: const Text(
-                            'No',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              icon: const Icon(
-                Icons.logout,
-                size: 30,
-                color: Colors.red,
+                        ],
+                      );
+                    },
+                  );
+                },
+                icon: const Icon(
+                  Icons.logout,
+                  size: 30,
+                  color: Colors.red,
+                ),
               ),
             ),
-          ),
-          Positioned(
-            left: 0,
-            top: 0,
-            child: SizedBox(
-              // alignment: Alignment.center,
-              height: 100,
+            Positioned(
+              left: 0,
+              top: 20,
               child: Image.asset(
                 KImage.sangLogo,
+                height: 150,
               ),
             ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              FittedBox(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    GradientText(
-                      'Sangai E-Ticket Checker',
-                      gradient: LinearGradient(colors: [
-                        Color(0xfff45b69),
-                        Color(0xffffbc11),
-                      ]),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+            Padding(
+              padding: const EdgeInsets.all(35),
+              child: Column(
                 children: [
-                  Text(name ?? '',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      )),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: 200,
-                child: Image.asset('assets/images/Scan.png'),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.of(context).pushNamed(MobileScannerPage.routeName);
-                },
-                child: Container(
-                  width: 500,
-                  height: 55,
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      // stops: [0.0, 0.0],
-                      colors: [
-                        Color(0xfff45b69),
-                        Color(0xffffbc11),
+                  const SizedBox(
+                    height: 150,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      // Text('Scan', style:Colors.black),
+                      // const GradientText(
+                      //   'Ticket',
+                      //   gradient: LinearGradient(colors: [
+                      //     Color(0xfff45b69),
+                      //     Color(0xffffbc11),
+                      //   ]),
+                      //   fontSize: 25,
+                      // ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  FittedBox(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        GradientText(
+                          'E-Ticket Checker',
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0xfff45b69),
+                              Color(0xffffbc11),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(name ?? '',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          )),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    height: 200,
+                    child: Image.asset(KImage.qrScan1),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (ctx) => const MobileScannerPage()),
+                      );
+                    },
+                    child: Container(
+                      width: 300,
+                      height: 50,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          // stops: [0.0, 0.0],
+                          colors: [
+                            Color(0xfff45b69),
+                            Color(0xffffbc11),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Scan now',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
                   ),
-                  child: const Center(
-                    child: Text(
-                      'Scan now',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
+                ],
               ),
-            ],
-          ),
-        ],
-      )),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

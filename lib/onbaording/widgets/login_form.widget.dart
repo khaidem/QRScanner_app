@@ -60,7 +60,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             child: Row(
               children: const [
                 GradientText(
-                  'Sangai E-Ticket Checker',
+                  'E-Ticket Checker',
                   style: TextStyle(fontSize: 40),
                   gradient: LinearGradient(colors: [
                     Color(0xfff45b69),

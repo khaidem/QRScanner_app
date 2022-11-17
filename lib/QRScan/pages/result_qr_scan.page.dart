@@ -45,12 +45,19 @@ class _ResultQrPageState extends State<ResultQrPage> {
           future: context.read<QRScanProvider>().getResult(widget.resultQr),
           builder: (context, snapShot) {
             if (snapShot.hasError) {
-              return const Center(
-                child: Text(
-                  'Invalid Ticket ',
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 224, 66, 119),
-                      fontWeight: FontWeight.bold),
+              return Center(
+                child: Column(
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text(
+                      'Invalid Ticket ',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 224, 66, 119),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 50),
+                    ),
+                  ],
                 ),
               );
             } else if (snapShot.hasData) {

@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
                 ),
           routes: {
             QrCameraPage.routeName: (context) => const QrCameraPage(),
-            MobileScannerPage.routeName: (context) => const MobileScannerPage()
+            MobileScannerPage.routeName: (context) => const MobileScannerPage(),
           },
         ),
       ),
