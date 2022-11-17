@@ -66,14 +66,19 @@ class _QrScannerPageState extends State<QrScannerPage> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: const Text(''),
-                      content: const Text('Do You want to logOut?'),
+                      title: const Text('Do You want to logout?'),
+                      // content: const Text('Do You want to logOut?'),
                       actions: <Widget>[
                         TextButton(
                           style: TextButton.styleFrom(
                             textStyle: Theme.of(context).textTheme.labelLarge,
                           ),
-                          child: const Text('Yes'),
+                          child: const Text(
+                            'Yes',
+                            style: TextStyle(
+                                color: Color(0xfff45b69),
+                                fontWeight: FontWeight.bold),
+                          ),
                           onPressed: () {
                             context.read<AuthService>().logOut();
                             Navigator.of(context).pushReplacementNamed('/');
@@ -81,9 +86,14 @@ class _QrScannerPageState extends State<QrScannerPage> {
                         ),
                         TextButton(
                           style: TextButton.styleFrom(
-                              textStyle: Theme.of(context).textTheme.labelLarge,
-                              backgroundColor: Colors.black),
-                          child: const Text('No'),
+                            textStyle: Theme.of(context).textTheme.labelLarge,
+                          ),
+                          child: const Text(
+                            'No',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
@@ -130,6 +140,9 @@ class _QrScannerPageState extends State<QrScannerPage> {
                     ),
                   ],
                 ),
+              ),
+              const SizedBox(
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

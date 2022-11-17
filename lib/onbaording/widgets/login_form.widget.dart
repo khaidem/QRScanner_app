@@ -54,7 +54,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
           ),
           Image.asset(
             KImage.sangLogo,
-            height: 150,
+            height: 180,
           ),
           FittedBox(
             child: Row(
@@ -80,7 +80,10 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
               hintText: 'User name',
               labelText: 'User name',
               labelStyle: const TextStyle(color: Colors.black),
-              prefixIcon: const Icon(Icons.person),
+              prefixIcon: const Icon(
+                Icons.person,
+                color: Colors.grey,
+              ),
               hintStyle: const TextStyle(color: Colors.grey),
               filled: true,
               fillColor: Colors.white70,
@@ -104,9 +107,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                 ),
               ),
               focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.blue,
-                ),
+                borderSide: BorderSide(color: Colors.grey),
               ),
             ),
             validator: (value) {
@@ -130,6 +131,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
               hintText: 'Password',
               labelText: 'Password',
               prefixIcon: IconButton(
+                  color: Colors.grey,
                   onPressed: () {
                     setState(() {
                       _isObscure = !_isObscure;
@@ -163,7 +165,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
               ),
               focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: Colors.blue,
+                  color: Colors.grey,
                 ),
               ),
             ),
