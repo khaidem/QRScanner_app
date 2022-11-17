@@ -57,7 +57,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             height: 150,
           ),
           const GradientText(
-            'Qr Scan',
+            'Sangai E-Ticket',
             style: TextStyle(fontSize: 40),
             gradient: LinearGradient(colors: [
               Color(0xfff45b69),

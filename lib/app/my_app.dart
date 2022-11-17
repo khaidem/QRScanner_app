@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<AuthService>(
         builder: (ctx, auth, _) => MaterialApp(
-          title: 'Qr Scan',
+          title: 'Sangai E-ticket',
           theme: ThemeData(fontFamily: GoogleFonts.raleway().fontFamily),
           debugShowCheckedModeBanner: false,
           builder: EasyLoading.init(),
