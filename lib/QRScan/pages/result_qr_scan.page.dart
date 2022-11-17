@@ -41,21 +41,21 @@ class _ResultQrPageState extends State<ResultQrPage> {
     return Padding(
       padding: const EdgeInsets.all(35),
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: FutureBuilder<QrScanResult>(
-            future: context.read<QRScanProvider>().getResult(widget.resultQr),
-            builder: (context, snapShot) {
-              if (snapShot.hasError) {
-                return const Center(
-                  child: Text(
-                    'Invalid Ticket ',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 224, 66, 119),
-                        fontWeight: FontWeight.bold),
-                  ),
-                );
-              } else if (snapShot.hasData) {
-                return Stack(
+        body: FutureBuilder<QrScanResult>(
+          future: context.read<QRScanProvider>().getResult(widget.resultQr),
+          builder: (context, snapShot) {
+            if (snapShot.hasError) {
+              return const Center(
+                child: Text(
+                  'Invalid Ticket ',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 224, 66, 119),
+                      fontWeight: FontWeight.bold),
+                ),
+              );
+            } else if (snapShot.hasData) {
+              return SingleChildScrollView(
+                child: Stack(
                   children: [
                     Positioned(
                       left: 0,
@@ -210,7 +210,10 @@ class _ResultQrPageState extends State<ResultQrPage> {
                                 ),
                               ),
                               onPressed: null,
-                              child: const Text('Already Check'),
+                              child: const Text(
+                                'Already Check',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
                         ),
@@ -297,14 +300,14 @@ class _ResultQrPageState extends State<ResultQrPage> {
                       ],
                     ),
                   ],
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            },
-          ),
+                ),
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
         ),
       ),
     );

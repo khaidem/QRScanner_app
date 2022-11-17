@@ -56,13 +56,19 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             KImage.sangLogo,
             height: 150,
           ),
-          const GradientText(
-            'Sangai E-Ticket',
-            style: TextStyle(fontSize: 40),
-            gradient: LinearGradient(colors: [
-              Color(0xfff45b69),
-              Color(0xffffbc11),
-            ]),
+          FittedBox(
+            child: Row(
+              children: const [
+                GradientText(
+                  'Sangai E-Ticket Checker',
+                  style: TextStyle(fontSize: 40),
+                  gradient: LinearGradient(colors: [
+                    Color(0xfff45b69),
+                    Color(0xffffbc11),
+                  ]),
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 40),
           TextFormField(

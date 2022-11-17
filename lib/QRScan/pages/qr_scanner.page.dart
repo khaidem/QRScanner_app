@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
 import 'package:qr_scan_app/QRScan/pages/mobile_scanner.page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/constant/constant.dart';
 import '../../onbaording/logic/auth_service.dart';
@@ -19,11 +22,13 @@ class QrScannerPage extends StatefulWidget {
 
 class _QrScannerPageState extends State<QrScannerPage> {
   var isDisable = true;
+  String? name;
 
   @override
   void initState() {
     super.initState();
     _updateAppbar();
+    loginStatus();
   }
 
   void _updateAppbar() {
@@ -33,6 +38,16 @@ class _QrScannerPageState extends State<QrScannerPage> {
 
       //or set color with: Color(0xFF0000FF)
     ));
+  }
+
+  void loginStatus() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      name = prefs.getString("venue").toString();
+
+      log(name.toString());
+    });
   }
 
   @override
@@ -47,12 +62,40 @@ class _QrScannerPageState extends State<QrScannerPage> {
             right: 0,
             child: IconButton(
               onPressed: () {
-                context.read<AuthService>().logOut();
-                Navigator.of(context).pushReplacementNamed('/');
+                showDialog<void>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text(''),
+                      content: const Text('Do You want to logOut?'),
+                      actions: <Widget>[
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: Theme.of(context).textTheme.labelLarge,
+                          ),
+                          child: const Text('Yes'),
+                          onPressed: () {
+                            context.read<AuthService>().logOut();
+                            Navigator.of(context).pushReplacementNamed('/');
+                          },
+                        ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                              textStyle: Theme.of(context).textTheme.labelLarge,
+                              backgroundColor: Colors.black),
+                          child: const Text('No'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
               icon: const Icon(
                 Icons.logout,
-                size: 40,
+                size: 30,
                 color: Colors.red,
               ),
             ),
@@ -74,16 +117,29 @@ class _QrScannerPageState extends State<QrScannerPage> {
               const SizedBox(
                 height: 20,
               ),
+              FittedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    GradientText(
+                      'Sangai E-Ticket Checker',
+                      gradient: LinearGradient(colors: [
+                        Color(0xfff45b69),
+                        Color(0xffffbc11),
+                      ]),
+                    ),
+                  ],
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  GradientText(
-                    'Scan Ticket',
-                    gradient: LinearGradient(colors: [
-                      Color(0xfff45b69),
-                      Color(0xffffbc11),
-                    ]),
-                  ),
+                children: [
+                  Text(name ?? '',
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      )),
                 ],
               ),
               const SizedBox(

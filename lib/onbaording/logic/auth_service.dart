@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
@@ -12,6 +14,7 @@ class AuthService with ChangeNotifier {
   String? _status;
 
   bool get isAuth {
+    log("Message $_msg");
     return token != null;
   }
 
@@ -53,6 +56,7 @@ class AuthService with ChangeNotifier {
         {'msg': _msg.toString()},
       );
       pref.setString('msg', storeData);
+      pref.setString('venue', responseData['venue_name']);
 
       logger.v('SharePref $storeData');
     } catch (error) {
