@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_scan_app/QRScan/pages/qr_scanner.page.dart';
 import 'package:qr_scan_app/core/constant/constant.dart';
 
 import '../../core/widget/eld.dart';
@@ -185,15 +184,17 @@ class _ResultQrPageState extends State<ResultQrPage> {
                           ),
                         ]),
                         TableRow(children: [
-                          Column(children: [
-                            Text(
-                              'Gender: ',
-                              style: GoogleFonts.raleway(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w800,
+                          Column(
+                            children: [
+                              Text(
+                                'Gender: ',
+                                style: GoogleFonts.raleway(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w800,
+                                ),
                               ),
-                            ),
-                          ]),
+                            ],
+                          ),
                           Column(children: [
                             Text(
                               snapShot.data!.gender,
@@ -257,15 +258,16 @@ class _ResultQrPageState extends State<ResultQrPage> {
                         onTap: () {
                           context
                               .read<QRScanProvider>()
-                              .getUpdate(widget.resultQr)
-                              .then(
-                                (value) =>
-                                    Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => const QrScannerPage(),
-                                  ),
-                                ),
-                              );
+                              .getUpdate(widget.resultQr);
+                          Navigator.of(context).pop();
+                          // .then(
+                          //   (value) =>
+                          //   //     Navigator.of(context).pushReplacement(
+                          //   //   MaterialPageRoute(
+                          //   //     builder: (context) => const QrScannerPage(),
+                          //   //   ),
+                          //   // ),
+                          // );
 
                           showSuccess(title: 'Success');
                         },
