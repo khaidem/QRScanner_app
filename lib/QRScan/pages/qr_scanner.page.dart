@@ -2,13 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_scan_app/QRScan/logic/qr_scan.provider.dart';
 
 import 'package:qr_scan_app/QRScan/pages/mobile_scanner.page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/constant/constant.dart';
-import '../../onbaording/logic/auth_service.dart';
 
 class QrScannerPage extends StatefulWidget {
   const QrScannerPage({
@@ -61,46 +62,47 @@ class _QrScannerPageState extends State<QrScannerPage> {
               right: 20,
               child: IconButton(
                 onPressed: () {
-                  showDialog<void>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('Do You want to logout?'),
-                        // content: const Text('Do You want to logOut?'),
-                        actions: <Widget>[
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              textStyle: Theme.of(context).textTheme.labelLarge,
-                            ),
-                            child: const Text(
-                              'Yes',
-                              style: TextStyle(
-                                  color: Color(0xfff45b69),
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            onPressed: () {
-                              context.read<AuthService>().logOut();
-                              Navigator.of(context).pushReplacementNamed('/');
-                            },
-                          ),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              textStyle: Theme.of(context).textTheme.labelLarge,
-                            ),
-                            child: const Text(
-                              'No',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  );
+                  context.read<QRScanProvider>().getResult('100001');
+                  // showDialog<void>(
+                  //   context: context,
+                  //   builder: (BuildContext context) {
+                  //     return AlertDialog(
+                  //       title: const Text('Do You want to logout?'),
+                  //       // content: const Text('Do You want to logOut?'),
+                  //       actions: <Widget>[
+                  //         TextButton(
+                  //           style: TextButton.styleFrom(
+                  //             textStyle: Theme.of(context).textTheme.labelLarge,
+                  //           ),
+                  //           child: const Text(
+                  //             'Yes',
+                  //             style: TextStyle(
+                  //                 color: Color(0xfff45b69),
+                  //                 fontWeight: FontWeight.bold),
+                  //           ),
+                  //           onPressed: () {
+                  //             context.read<AuthService>().logOut();
+                  //             Navigator.of(context).pushReplacementNamed('/');
+                  //           },
+                  //         ),
+                  //         TextButton(
+                  //           style: TextButton.styleFrom(
+                  //             textStyle: Theme.of(context).textTheme.labelLarge,
+                  //           ),
+                  //           child: const Text(
+                  //             'No',
+                  //             style: TextStyle(
+                  //                 color: Colors.black,
+                  //                 fontWeight: FontWeight.bold),
+                  //           ),
+                  //           onPressed: () {
+                  //             Navigator.of(context).pop();
+                  //           },
+                  //         ),
+                  //       ],
+                  //     );
+                  //   },
+                  // );
                 },
                 icon: const Icon(
                   Icons.logout,
@@ -168,12 +170,18 @@ class _QrScannerPageState extends State<QrScannerPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(name ?? '',
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          )),
+                      Text(
+                        name ?? '',
+                        style: GoogleFonts.raleway(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.grey),
+                        // style: const TextStyle(
+                        //   color: Colors.black,
+                        //   fontSize: 20.0,
+                        //   fontWeight: FontWeight.bold,
+                        // ),
+                      ),
                     ],
                   ),
                   const SizedBox(

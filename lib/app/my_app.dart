@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:qr_scan_app/QRScan/logic/qr_scan.provider.dart';
 import 'package:qr_scan_app/QRScan/pages/mobile_scanner.page.dart';
 import 'package:qr_scan_app/QRScan/pages/qr_scanner.page.dart';
-import 'package:qr_scan_app/QRScan/widgets/widgets.dart';
 import 'package:qr_scan_app/onbaording/logic/auth_service.dart';
 import 'package:qr_scan_app/onbaording/pages/login.page.dart';
 import 'package:qr_scan_app/onbaording/pages/splash_screen.page.dart';
@@ -42,7 +41,6 @@ class MyApp extends StatelessWidget {
                           : const LoginPage(),
                 ),
           routes: {
-            QrCameraPage.routeName: (context) => const QrCameraPage(),
             MobileScannerPage.routeName: (context) => const MobileScannerPage(),
           },
         ),

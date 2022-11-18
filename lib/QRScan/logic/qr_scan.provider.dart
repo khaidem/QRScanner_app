@@ -1,7 +1,7 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:qr_scan_app/QRScan/data/model/qr_scan_result.model.dart';
 import 'package:qr_scan_app/QRScan/data/model/qr_scan_update.dart';
 import 'package:qr_scan_app/core/helper/logger.dart';
@@ -23,16 +23,17 @@ class QRScanProvider with ChangeNotifier {
       var requestUrl = '$endpointUrl?id=$id';
       var response = await http.get(
         Uri.parse(requestUrl),
-        headers: {"Authorization": extractedUserData['msg']},
+        headers: {"Token": extractedUserData['msg']},
       );
       var responseData = json.decode(response.body);
+      log(responseData.toString());
 
-      if (responseData['msg'] == "Invalid params.") {
+      if (responseData['msg'] == "Invalid Ticket.") {
         throw HttpException(responseData['msg']);
       }
       return QrScanResult.fromJson(json.decode(response.body));
     } catch (error) {
-      throw EasyLoading.showToast("Invalid Ticket");
+      rethrow;
     }
   }
 
@@ -49,7 +50,7 @@ class QRScanProvider with ChangeNotifier {
       var requestUrl = '$url?id=$id';
       var response = await http.get(
         Uri.parse(requestUrl),
-        headers: {"Authorization": extractedUserData['msg']},
+        headers: {"Token": extractedUserData['msg']},
       );
       var d = json.decode(response.body);
       logger.wtf(d);

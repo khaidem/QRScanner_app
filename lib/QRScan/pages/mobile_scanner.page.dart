@@ -102,9 +102,9 @@ class _MobileScannerPageState extends State<MobileScannerPage> {
   void _foundBarCode(Barcode barcode, MobileScannerArguments? args) {
     if (!screenOpen) {
       final String code = barcode.rawValue ?? "...";
-      log(code.toString());
-      List data = code.split(',');
-      context.read<QRScanProvider>().getResult(data[0]);
+      log("Scan Code $code");
+      // List data = code.split(',');
+      context.read<QRScanProvider>().getResult(code);
       screenOpen = true;
       Navigator.pushReplacement(
         context,
