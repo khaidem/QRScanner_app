@@ -49,14 +49,19 @@ class _ResultQrPageState extends State<ResultQrPage> {
                 child: Column(
                   // crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       'Invalid Ticket ',
                       style: TextStyle(
                           color: Color.fromARGB(255, 224, 66, 119),
                           fontWeight: FontWeight.bold,
                           fontSize: 50),
                     ),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Back'))
                   ],
                 ),
               );

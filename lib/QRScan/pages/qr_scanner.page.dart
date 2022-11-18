@@ -145,8 +145,13 @@ class _QrScannerPageState extends State<QrScannerPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
+                        Text(
+                          'E-Ticket',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w900, fontSize: 30),
+                        ),
                         GradientText(
-                          'E-Ticket Checker',
+                          ' Checker',
                           gradient: LinearGradient(
                             colors: [
                               Color(0xfff45b69),
@@ -243,8 +248,10 @@ class GradientText extends StatelessWidget {
       shaderCallback: (bounds) => gradient.createShader(
         Rect.fromLTWH(0, 0, bounds.width, bounds.height),
       ),
-      child: Text(text,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+      child: Text(
+        text,
+        style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 30),
+      ),
     );
   }
 }
