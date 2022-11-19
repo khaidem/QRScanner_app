@@ -39,29 +39,71 @@ class _ResultQrPageState extends State<ResultQrPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(35),
+      padding: const EdgeInsets.all(43),
       child: Scaffold(
         body: FutureBuilder<QrScanResult>(
           future: context.read<QRScanProvider>().getResult(widget.resultQr),
           builder: (context, snapShot) {
             if (snapShot.hasError) {
-              return Center(
+              return SingleChildScrollView(
                 child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text(
-                      'Invalid Ticket ',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 224, 66, 119),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 50),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          icon: const Icon(
+                            Icons.arrow_back_ios,
+                            size: 30,
+                          ),
+                        ),
+                        Image.asset(
+                          KImage.sangLogo,
+                          height: 100,
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 100,
+                    ),
+                    SizedBox(
+                      height: 150,
+                      child: Image.asset(KImage.qrScan2),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      'Invalid Ticket',
+                      style: GoogleFonts.raleway(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
                     ),
                     ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('Back'))
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xfff45b69),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            20,
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text(
+                        'Back',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ],
                 ),
               );
