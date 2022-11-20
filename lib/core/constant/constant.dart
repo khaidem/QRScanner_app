@@ -5,3 +5,8 @@ class KImage {
   static const String qrScan2 = 'assets/images/ticketss.png';
   static const String sangLogo = 'assets/images/sangai-LOGO.png';
 }
+
+String baseUrl = 'https://check.sangaiticket.com/';
+String loginUrl = 'site/login';
+String ticketViewUrl = 'api/ticketviews';
+String ticketUpdate = 'api/ticketupdates';

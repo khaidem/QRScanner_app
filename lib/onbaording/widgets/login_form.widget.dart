@@ -49,9 +49,6 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(
-            height: 50,
-          ),
           Image.asset(
             KImage.sangLogo,
             height: 180,

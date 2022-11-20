@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:qr_scan_app/QRScan/data/model/qr_scan_result.model.dart';
 import 'package:qr_scan_app/QRScan/data/model/qr_scan_update.dart';
+import 'package:qr_scan_app/core/constant/constant.dart';
 import 'package:qr_scan_app/core/helper/logger.dart';
 import 'package:qr_scan_app/onbaording/data/model/http_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,7 +19,7 @@ class QRScanProvider with ChangeNotifier {
       final extractedUserData =
           json.decode(pref.getString("msg") as String) as Map<String, dynamic>;
 
-      var endpointUrl = 'https://sangaiticket.globizsapp.com/api/ticketviews';
+      var endpointUrl = baseUrl + ticketViewUrl;
 
       var requestUrl = '$endpointUrl?id=$id';
       var response = await http.get(
@@ -45,7 +46,7 @@ class QRScanProvider with ChangeNotifier {
       final extractedUserData =
           json.decode(pref.getString("msg") as String) as Map<String, dynamic>;
 
-      var url = "https://sangaiticket.globizsapp.com/api/ticketupdates";
+      var url = baseUrl + ticketUpdate;
 
       var requestUrl = '$url?id=$id';
       var response = await http.get(

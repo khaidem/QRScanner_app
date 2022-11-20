@@ -9,6 +9,8 @@ import 'package:qr_scan_app/onbaording/data/model/http_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
+import '../../core/constant/constant.dart';
+
 class AuthService with ChangeNotifier {
   String? _msg;
   String? _status;
@@ -29,8 +31,7 @@ class AuthService with ChangeNotifier {
   ///
 
   Future<void> login(String username, String password) async {
-    final url =
-        Uri.parse('https://sangaiticket.globizsapp.com/api/sitelogins/login');
+    final url = Uri.parse(baseUrl + loginUrl);
     try {
       final response = await http.post(
         url,
@@ -65,7 +66,7 @@ class AuthService with ChangeNotifier {
     }
   }
 
-  /// ### This will work for usr
+  /// ### This will work for user checkIn
   Future<bool> tryAutoLogin() async {
     final pref = await SharedPreferences.getInstance();
 
