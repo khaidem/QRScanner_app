@@ -1,14 +1,22 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:qr_scan_app/core/helper/logger.dart';
+import 'package:qr_scan_app/core/widget/eld.dart';
+import 'package:qr_scan_app/onbaording/data/model/http_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+
+import '../../core/constant/constant.dart';
 
 class AuthService with ChangeNotifier {
   String? _msg;
   String? _status;
 
   bool get isAuth {
+    log("Message $_msg");
     return token != null;
   }
 
@@ -23,32 +31,42 @@ class AuthService with ChangeNotifier {
   ///
 
   Future<void> login(String username, String password) async {
-    final url =
-        Uri.parse('https://sangaiticket.globizsapp.com/api/sitelogins/login');
+    final url = Uri.parse(baseUrl + loginUrl);
     try {
       final response = await http.post(
         url,
         body: json.encode(
           {
-            "username": username,
-            "password": password,
+            'username': username,
+            'password': password,
           },
         ),
       );
       final responseData = jsonDecode(response.body);
-
+      _msg = responseData['msg'];
       logger.d(responseData);
+      showSuccess(title: "Success");
+
+      if (responseData['msg'] == "Invalid Username or Password") {
+        throw HttpException(responseData['msg']);
+      }
+      notifyListeners();
       final pref = await SharedPreferences.getInstance();
-      _msg = responseData["msg"];
-      final storeData = json.encode({"msg": _msg.toString()});
-      pref.setString("msg", storeData);
+
+      final storeData = json.encode(
+        {'msg': _msg.toString()},
+      );
+      pref.setString('msg', storeData);
+      pref.setString('venue', responseData['venue_name']);
+
       logger.v('SharePref $storeData');
     } catch (error) {
-      rethrow;
+      EasyLoading.showToast(error.toString());
+      logger.e(error.toString());
     }
   }
 
-  /// ### This will work for usr
+  /// ### This will work for user checkIn
   Future<bool> tryAutoLogin() async {
     final pref = await SharedPreferences.getInstance();
 

@@ -45,6 +45,9 @@ dependencies:
   flutter_native_splash: ^2.2.13
   http: ^0.13.5
   provider: ^6.0.4
+  flutter_barcode_scanner: ^2.0.0
+  mobile_scanner: ^2.0.0
+  google_fonts: ^3.0.1
 
 dev_dependencies:
   flutter_test:
@@ -66,11 +69,11 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/images/QrLogo-removebg-preview.png"
+  image_path: "assets/images/sangai_background.png"
 
 flutter_native_splash:
   color: "#FFFFFF"
-  image: assets/images/QrLogo-removebg-preview.png
+  image: assets/images/sangai-LOGO.png
   branding_mode: bottom
   android: true
   ios: true

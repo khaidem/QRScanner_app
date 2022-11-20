@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_scan_app/QRScan/pages/qr_scanner.page.dart';
+import 'package:qr_scan_app/core/constant/constant.dart';
 
 import '../../core/widget/eld.dart';
 import '../data/model/qr_scan_result.model.dart';
 import '../logic/qr_scan.provider.dart';
 
 class ResultQrPage extends StatefulWidget {
-  const ResultQrPage({super.key, required this.resultQr});
+  const ResultQrPage(
+      {super.key, required this.resultQr, required this.screenClosed});
   final String resultQr;
+  final Function() screenClosed;
   static const routeName = '/ResultQrPage';
 
   @override
@@ -18,177 +22,368 @@ class ResultQrPage extends StatefulWidget {
 class _ResultQrPageState extends State<ResultQrPage> {
   bool isEnable = false;
   @override
+  void initState() {
+    _updateAppbar();
+    super.initState();
+  }
+
+  void _updateAppbar() {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+      statusBarIconBrightness: Brightness.dark,
+
+      //or set color with: Color(0xFF0000FF)
+    ));
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(
-      //   leading: IconButton(
-      //       onPressed: () {
-      //         Navigator.of(context).pop();
-      //       },
-      //       icon: const Icon(Icons.arrow_back_ios_new_sharp)),
-      // ),
-      body: FutureBuilder<QrScanResult>(
-        future: context.read<QRScanProvider>().getResult(widget.resultQr),
-        builder: (context, snapShot) {
-          if (snapShot.hasError) {
-            return const Text('Something went Wrong');
-          } else if (snapShot.hasData) {
-            return Padding(
-              padding: const EdgeInsets.all(25),
-              child: Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back_ios,
-                          size: 40,
-                        ),
-                      ),
-                      Container(
-                        alignment: Alignment.bottomLeft,
-                        height: 70,
-                        child: Image.asset(
-                            'assets/images/IMG-20221102-WA0002.jpg'),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  SizedBox(
-                    height: 200,
-                    child: Image.asset('assets/images/ticketss.png'),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Text(
-                    'Ticket Details',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 80),
-                    child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+    return Padding(
+      padding: const EdgeInsets.all(43),
+      child: Scaffold(
+        body: FutureBuilder<QrScanResult>(
+          future: context.read<QRScanProvider>().getResult(widget.resultQr),
+          builder: (context, snapShot) {
+            if (snapShot.hasError) {
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        IconButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          icon: const Icon(
+                            Icons.arrow_back_ios,
+                            size: 30,
+                          ),
+                        ),
+                        Image.asset(
+                          KImage.sangLogo,
+                          height: 100,
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 100,
+                    ),
+                    SizedBox(
+                      height: 150,
+                      child: Image.asset(KImage.qrScan2),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      'Invalid Ticket',
+                      style: GoogleFonts.raleway(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xfff45b69),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            20,
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text(
+                        'Back',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            } else if (snapShot.hasData) {
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.of(context).pushReplacementNamed('/');
+                          },
+                          icon: const Icon(
+                            Icons.arrow_back_ios,
+                            size: 30,
+                          ),
+                        ),
+                        Image.asset(
+                          KImage.sangLogo,
+                          height: 100,
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 100,
+                    ),
+                    SizedBox(
+                      height: 150,
+                      child: Image.asset(KImage.qrScan2),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      'Ticket Details',
+                      style: GoogleFonts.raleway(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Table(
+                      defaultColumnWidth: const FixedColumnWidth(120),
+                      children: [
+                        TableRow(
                           children: [
-                            const Text('Name :'),
-                            Text(
-                              snapShot.data!.name,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                            )
+                            Column(children: [
+                              Text(
+                                'Name :',
+                                style: GoogleFonts.raleway(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              )
+                            ]),
+                            Column(
+                              children: [
+                                Text(
+                                  snapShot.data!.name,
+                                  style: GoogleFonts.raleway(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                )
+                              ],
+                            ),
                           ],
                         ),
-                        const Divider(
-                          thickness: 1,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text('Id Number :'),
+                        const TableRow(children: [
+                          SizedBox(
+                            height: 5,
+                            child: Divider(
+                              thickness: 1,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                            child: Divider(
+                              thickness: 1,
+                            ),
+                          ),
+                        ]),
+                        TableRow(children: [
+                          Column(children: [
                             Text(
-                              snapShot.data!.idNo,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
+                              'Age:',
+                              style: GoogleFonts.raleway(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w800,
+                              ),
                             )
-                          ],
-                        ),
-                        const Divider(
-                          thickness: 1,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text('Id Type: '),
+                          ]),
+                          Column(children: [
                             Text(
-                              snapShot.data!.idType,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
+                              snapShot.data!.age.toString(),
+                              style: GoogleFonts.raleway(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w900,
+                              ),
                             )
+                          ]),
+                        ]),
+                        const TableRow(children: [
+                          SizedBox(
+                            height: 5,
+                            child: Divider(
+                              thickness: 1,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                            child: Divider(
+                              thickness: 1,
+                            ),
+                          ),
+                        ]),
+                        TableRow(children: [
+                          Column(
+                            children: [
+                              Text(
+                                'Gender: ',
+                                style: GoogleFonts.raleway(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(children: [
+                            Text(
+                              snapShot.data!.gender,
+                              style: GoogleFonts.raleway(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            )
+                          ]),
+                        ]),
+                        const TableRow(
+                          children: [
+                            SizedBox(
+                              height: 5,
+                              child: Divider(
+                                thickness: 1,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                              child: Divider(
+                                thickness: 1,
+                              ),
+                            ),
                           ],
-                        ),
-                        const Divider(
-                          thickness: 1,
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Visibility(
-                    visible: snapShot.data!.checked,
-                    child: SizedBox(
-                      width: 500,
-                      height: 55,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xfff45b69),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                              20,
+
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    Visibility(
+                      visible: snapShot.data!.checked,
+                      child: SizedBox(
+                        width: 500,
+                        height: 55,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xfff45b69),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                  20,
+                                ),
+                              ),
+                            ),
+                            onPressed: null,
+                            child: const Text(
+                              'Already Check',
+                              style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
-                        onPressed: null,
-                        child: const Text('Already Check'),
                       ),
                     ),
-                  ),
-                  Visibility(
-                    visible: snapShot.data!.checked == false,
-                    child: SizedBox(
-                      width: 500,
-                      height: 55,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xfff45b69),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                              20,
-                            ),
-                          ),
-                        ),
-                        onPressed: () {
+                    Visibility(
+                      visible: snapShot.data!.checked == false,
+                      child: InkWell(
+                        onTap: () {
                           context
                               .read<QRScanProvider>()
-                              .getUpdate(widget.resultQr)
-                              .then(
-                                (value) =>
-                                    Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => const QrScannerPage(),
-                                  ),
-                                ),
-                              );
+                              .getUpdate(widget.resultQr);
+                          Navigator.of(context).pop();
+                          // .then(
+                          //   (value) =>
+                          //   //     Navigator.of(context).pushReplacement(
+                          //   //   MaterialPageRoute(
+                          //   //     builder: (context) => const QrScannerPage(),
+                          //   //   ),
+                          //   // ),
+                          // );
 
                           showSuccess(title: 'Success');
                         },
-                        child: const Text('CHECK'),
+                        child: Container(
+                          width: 500,
+                          height: 55,
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              // stops: [0.0, 0.0],
+                              colors: [
+                                Color(0xfff45b69),
+                                Color(0xffffbc11),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(20),
+                            ),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'Check',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
+                    // Visibility(
+                    //   visible: snapShot.data!.checked == false,
+                    //   child: SizedBox(
+                    //     width: 500,
+                    //     height: 55,
+                    //     child: ElevatedButton(
+                    //       style: ElevatedButton.styleFrom(
+                    //         backgroundColor: const Color(0xfff45b69),
+                    //         shape: RoundedRectangleBorder(
+                    //           borderRadius: BorderRadius.circular(
+                    //             20,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       onPressed: () {
+                    //         context
+                    //             .read<QRScanProvider>()
+                    //             .getUpdate(widget.resultQr)
+                    //             .then(
+                    //               (value) =>
+                    //                   Navigator.of(context).pushReplacement(
+                    //                 MaterialPageRoute(
+                    //                   builder: (context) => const QrScannerPage(),
+                    //                 ),
+                    //               ),
+                    //             );
+
+                    //         showSuccess(title: 'Success');
+                    //       },
+                    //       child: const Text('CHECK'),
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
+                ),
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ),
       ),
     );
   }
